@@ -276,6 +276,37 @@ button.secondary:hover { border-color: var(--border-2); background: var(--panel-
 .field-hint.warn { color: var(--accent); }
 .field-hint.bad { color: var(--danger); }
 
+.advanced {
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+}
+.advanced > summary {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s;
+}
+.advanced > summary:hover { color: var(--text); }
+.advanced > summary::-webkit-details-marker { display: none; }
+.advanced > summary::before {
+  content: '▸';
+  font-size: 9px;
+  color: var(--text-3);
+  transition: transform 0.15s;
+}
+.advanced[open] > summary::before { transform: rotate(90deg); }
+.advanced .adv-hint { font-family: var(--mono); font-size: 10px; color: var(--text-3); font-weight: 400; }
+.advanced[open] { padding-bottom: 4px; }
+.advanced .field:first-of-type { margin-top: 12px; }
+
 /* ===== Dropzone ===== */
 .dropzone {
   display: block;
@@ -907,6 +938,22 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
         <label class="field-label" for="metaUrl" style="display:block;margin-bottom:5px;">URL</label>
         <input type="text" id="metaUrl" placeholder="https://example.com/page" autocomplete="off" spellcheck="false" />
       </div>
+
+      <details class="advanced">
+        <summary>Advanced &nbsp;<span class="adv-hint">(image alt, Twitter handle, locale)</span></summary>
+        <div class="field">
+          <label class="field-label" for="metaImageAlt" style="display:block;margin-bottom:5px;">Image alt text</label>
+          <input type="text" id="metaImageAlt" placeholder="Description of the image for accessibility" maxlength="200" />
+        </div>
+        <div class="field">
+          <label class="field-label" for="metaTwitterHandle" style="display:block;margin-bottom:5px;">Twitter handle</label>
+          <input type="text" id="metaTwitterHandle" placeholder="@username" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label class="field-label" for="metaLocale" style="display:block;margin-bottom:5px;">Locale</label>
+          <input type="text" id="metaLocale" placeholder="en_US" autocomplete="off" />
+        </div>
+      </details>
     </div>
 
     <div class="section editor" id="editorSection">
@@ -1149,7 +1196,10 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
     crop: { x: 0, y: 0, w: 0, h: 0 },
     quality: 0.85,
     format: 'jpeg',
-    meta: { title: '', description: '', site: '', url: '' }
+    meta: {
+      title: '', description: '', site: '', url: '',
+      imageAlt: '', twitterHandle: '', locale: ''
+    }
   };
 
   const $ = (id) => document.getElementById(id);
@@ -1159,6 +1209,8 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
     dropzone: $('dropzone'), fileInput: $('fileInput'),
     metaTitle: $('metaTitle'), metaDescription: $('metaDescription'),
     metaSite: $('metaSite'), metaUrl: $('metaUrl'),
+    metaImageAlt: $('metaImageAlt'), metaTwitterHandle: $('metaTwitterHandle'),
+    metaLocale: $('metaLocale'),
     titleCount: $('titleCount'), titleHint: $('titleHint'),
     descCount: $('descCount'), descHint: $('descHint'),
     editorSection: $('editorSection'), cropArea: $('cropArea'),
@@ -1222,14 +1274,20 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
         image: m('meta[property="og:image"]') || m('meta[name="twitter:image"]') ||
                m('meta[name="twitter:image:src"]') || '',
         url: m('meta[property="og:url"]') || url,
-        site: m('meta[property="og:site_name"]') || safeHost(url)
+        site: m('meta[property="og:site_name"]') || safeHost(url),
+        imageAlt: m('meta[property="og:image:alt"]') || m('meta[name="twitter:image:alt"]') || '',
+        twitterHandle: m('meta[name="twitter:site"]') || m('meta[name="twitter:creator"]') || '',
+        locale: m('meta[property="og:locale"]') || ''
       };
 
       els.metaTitle.value = og.title;
       els.metaDescription.value = og.description;
       els.metaSite.value = og.site;
       els.metaUrl.value = og.url;
-      Object.assign(state.meta, og);
+      els.metaImageAlt.value = og.imageAlt;
+      els.metaTwitterHandle.value = og.twitterHandle;
+      els.metaLocale.value = og.locale;
+      Object.assign(state.meta, { title: og.title, description: og.description, site: og.site, url: og.url, imageAlt: og.imageAlt, twitterHandle: og.twitterHandle, locale: og.locale });
 
       if (og.image) {
         const absImg = new URL(og.image, url).href;
@@ -1573,6 +1631,7 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
     els.qualitySlider.disabled = state.format === 'png';
     els.qualitySlider.style.opacity = state.format === 'png' ? '0.4' : '1';
     updateOutput();
+    renderMetaTags();
   });
 
   els.downloadBtn.addEventListener('click', () => {
@@ -1595,13 +1654,16 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
     }, mime, q);
   });
 
-  ['metaTitle', 'metaDescription', 'metaSite', 'metaUrl'].forEach(id => {
+  ['metaTitle', 'metaDescription', 'metaSite', 'metaUrl', 'metaImageAlt', 'metaTwitterHandle', 'metaLocale'].forEach(id => {
     els[id].addEventListener('input', () => {
       state.meta = {
         title: els.metaTitle.value,
         description: els.metaDescription.value,
         site: els.metaSite.value,
-        url: els.metaUrl.value
+        url: els.metaUrl.value,
+        imageAlt: els.metaImageAlt.value,
+        twitterHandle: els.metaTwitterHandle.value,
+        locale: els.metaLocale.value
       };
       renderPreviewText();
       renderMetaTags();
@@ -1727,17 +1789,31 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
   function buildLines() {
     const m = state.meta;
     const imgUrl = state.sourceUrl || '';
+    const imgType = state.format === 'png' ? 'image/png'
+                  : state.format === 'webp' ? 'image/webp'
+                  : 'image/jpeg';
+    const handle = m.twitterHandle
+      ? (m.twitterHandle.startsWith('@') ? m.twitterHandle : '@' + m.twitterHandle)
+      : '';
     return [
+      ['property','og:type', 'website'],
+      ['property','og:site_name', m.site],
+      ['property','og:locale', m.locale || (m.title || m.description || imgUrl ? 'en_US' : '')],
+      ['property','og:url', m.url],
       ['property','og:title', m.title],
       ['property','og:description', m.description],
       ['property','og:image', imgUrl],
-      ['property','og:url', m.url],
-      ['property','og:type', 'website'],
-      ['property','og:site_name', m.site],
+      ['property','og:image:type', imgUrl ? imgType : ''],
+      ['property','og:image:width', imgUrl ? '1200' : ''],
+      ['property','og:image:height', imgUrl ? '630' : ''],
+      ['property','og:image:alt', imgUrl ? m.imageAlt : ''],
       ['name','twitter:card', 'summary_large_image'],
+      ['name','twitter:site', handle],
+      ['name','twitter:creator', handle],
       ['name','twitter:title', m.title],
       ['name','twitter:description', m.description],
-      ['name','twitter:image', imgUrl]
+      ['name','twitter:image', imgUrl],
+      ['name','twitter:image:alt', imgUrl ? m.imageAlt : '']
     ].filter(([,, v]) => v);
   }
 
