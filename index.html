@@ -863,7 +863,7 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
 
       <div id="urlMode">
         <div class="url-row">
-          <input type="url" id="urlInput" placeholder="https://example.com" />
+          <input type="text" id="urlInput" placeholder="https://example.com" autocomplete="off" spellcheck="false" />
           <button class="primary" id="fetchBtn">Fetch</button>
         </div>
         <div class="url-status" id="urlStatus"></div>
@@ -905,7 +905,7 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
       </div>
       <div class="field">
         <label class="field-label" for="metaUrl" style="display:block;margin-bottom:5px;">URL</label>
-        <input type="url" id="metaUrl" placeholder="https://example.com/page" />
+        <input type="text" id="metaUrl" placeholder="https://example.com/page" autocomplete="off" spellcheck="false" />
       </div>
     </div>
 
@@ -1239,7 +1239,11 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
           await loadImageFromUrl(absImg);
           setUrlStatus('Loaded · "' + (og.title || 'untitled').slice(0, 60) + '"', 'success');
         } catch (imgErr) {
-          setUrlStatus('Page parsed · couldn\'t load og:image (' + imgErr.message + ')', 'error');
+          // Fallback: image couldn't be fetched via proxy (CORS / blocked / 404 on proxy),
+          // but we can still render the previews using the og:image URL directly as a CSS background.
+          // The editor stays unavailable since canvas needs the blob, but previews look correct.
+          applyImageToPreviews(absImg);
+          setUrlStatus('Previewing live image · upload a copy to crop / export', 'success');
         }
       } else {
         setUrlStatus('Page loaded · no og:image found', 'success');
@@ -1787,6 +1791,7 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
     renderPreviewText();
     renderMetaTags();
     if (state.sourceImage) updateOutput();
+    else if (state.sourceUrl) applyImageToPreviews(state.sourceUrl);
     else applyImageToPreviews(null);
   }
 
