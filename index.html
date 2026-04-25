@@ -243,14 +243,38 @@ button.secondary {
 }
 button.secondary:hover { border-color: var(--border-2); background: var(--panel-2); }
 
-.field { margin-bottom: 12px; }
+.field { margin-bottom: 14px; }
+.field-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 5px;
+  gap: 10px;
+}
 .field-label {
   display: block;
   font-size: 11px;
   color: var(--text-2);
-  margin-bottom: 5px;
   font-weight: 500;
 }
+.field-count {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+.field-count.warn { color: var(--accent); }
+.field-count.bad { color: var(--danger); }
+.field-hint {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  margin-top: 5px;
+  letter-spacing: 0;
+  line-height: 1.45;
+}
+.field-hint.warn { color: var(--accent); }
+.field-hint.bad { color: var(--danger); }
 
 /* ===== Dropzone ===== */
 .dropzone {
@@ -460,7 +484,54 @@ input[type="range"]::-moz-range-thumb {
 }
 .size-info > div + div { border-left: 1px solid var(--border); }
 .size-info .lbl { font-size: 11px; color: var(--text-2); }
-.size-info .val { font-family: var(--mono); font-size: 12px; color: var(--text); font-weight: 500; }
+.size-info .val {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.status-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--text-4);
+}
+.status-dot.good { background: var(--success); box-shadow: 0 0 4px rgba(109,213,140,0.5); }
+.status-dot.warn { background: var(--accent); box-shadow: 0 0 4px rgba(245,158,11,0.5); }
+.status-dot.bad { background: var(--danger); box-shadow: 0 0 4px rgba(248,113,113,0.5); }
+
+.auto-btn {
+  background: var(--accent-soft);
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--accent);
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.auto-btn:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.auto-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.source-warn {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid rgba(245,158,11,0.25);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  line-height: 1.4;
+}
 
 button.download {
   background: var(--accent);
@@ -813,19 +884,27 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
     <div class="section">
       <div class="section-title">Metadata</div>
       <div class="field">
-        <label class="field-label" for="metaTitle">Title</label>
-        <input type="text" id="metaTitle" placeholder="Your awesome page title" maxlength="160" />
+        <div class="field-head">
+          <label class="field-label" for="metaTitle">Title</label>
+          <span class="field-count" id="titleCount">0 / 60</span>
+        </div>
+        <input type="text" id="metaTitle" placeholder="Your awesome page title" maxlength="200" />
+        <div class="field-hint" id="titleHint">Recommended ≤ 60 · WhatsApp 65 · Twitter/LinkedIn 70 · Facebook 100</div>
       </div>
       <div class="field">
-        <label class="field-label" for="metaDescription">Description</label>
-        <textarea id="metaDescription" placeholder="A compelling description for shared links" maxlength="320"></textarea>
+        <div class="field-head">
+          <label class="field-label" for="metaDescription">Description</label>
+          <span class="field-count" id="descCount">0 / 160</span>
+        </div>
+        <textarea id="metaDescription" placeholder="A compelling description for shared links" maxlength="500"></textarea>
+        <div class="field-hint" id="descHint">Recommended 130–160 · WhatsApp 175 · Twitter 200</div>
       </div>
       <div class="field">
-        <label class="field-label" for="metaSite">Site / domain</label>
+        <label class="field-label" for="metaSite" style="display:block;margin-bottom:5px;">Site / domain</label>
         <input type="text" id="metaSite" placeholder="example.com" />
       </div>
       <div class="field">
-        <label class="field-label" for="metaUrl">URL</label>
+        <label class="field-label" for="metaUrl" style="display:block;margin-bottom:5px;">URL</label>
         <input type="url" id="metaUrl" placeholder="https://example.com/page" />
       </div>
     </div>
@@ -875,8 +954,11 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
 
         <div class="size-info">
           <div><span class="lbl">Original</span><span class="val" id="origSize">—</span></div>
-          <div><span class="lbl">Output</span><span class="val" id="outSize">—</span></div>
+          <div><span class="lbl">Output</span><span class="val"><span id="outSize">—</span><span class="status-dot" id="sizeStatus"></span></span></div>
         </div>
+
+        <div class="source-warn" id="sourceWarn" hidden></div>
+        <button class="auto-btn" id="autoCompressBtn" hidden>⚡ Auto-compress to ~200 KB</button>
 
         <button class="download" id="downloadBtn">
           <span class="label">
@@ -1035,6 +1117,30 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
   const ASPECT = 1200 / 630;
   const PROXY = (u) => 'https://corsproxy.io/?url=' + encodeURIComponent(u);
 
+  // Per-platform recommended limits (where omitted, platform doesn't truncate or doesn't show field)
+  const LIMITS = {
+    title: {
+      safe: 60,
+      whatsapp: 65,
+      twitter: 70,
+      linkedin: 70,
+      slack: 75,
+      facebook: 100,
+      discord: 256
+    },
+    description: {
+      safe: 160,
+      whatsapp: 175,
+      twitter: 200,
+      facebook: 200,
+      discord: 2048
+    },
+    fileSizeGood: 200 * 1024,
+    fileSizeWarn: 500 * 1024,
+    fileSizeBad: 1024 * 1024,
+    minDim: { w: 1200, h: 630 }
+  };
+
   const state = {
     sourceImage: null,
     sourceBlob: null,
@@ -1053,12 +1159,16 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
     dropzone: $('dropzone'), fileInput: $('fileInput'),
     metaTitle: $('metaTitle'), metaDescription: $('metaDescription'),
     metaSite: $('metaSite'), metaUrl: $('metaUrl'),
+    titleCount: $('titleCount'), titleHint: $('titleHint'),
+    descCount: $('descCount'), descHint: $('descHint'),
     editorSection: $('editorSection'), cropArea: $('cropArea'),
     cropWrap: $('cropWrap'), cropImg: $('cropImg'), cropBox: $('cropBox'),
     cropLabel: $('cropLabel'), resetCropBtn: $('resetCropBtn'),
     qualitySlider: $('qualitySlider'), qualityVal: $('qualityVal'),
     formatToggle: $('formatToggle'), formatHint: $('formatHint'),
     origSize: $('origSize'), outSize: $('outSize'),
+    sizeStatus: $('sizeStatus'), sourceWarn: $('sourceWarn'),
+    autoCompressBtn: $('autoCompressBtn'),
     downloadBtn: $('downloadBtn'),
     previewTabs: $('previewTabs'), previewGrid: $('previewGrid'),
     metaOutput: $('metaOutput'), copyMetaBtn: $('copyMetaBtn'),
@@ -1166,6 +1276,7 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
         els.cropImg.onload = () => {
           els.editorSection.classList.add('active');
           els.origSize.textContent = formatBytes(blob.size);
+          checkSourceDimensions();
           requestAnimationFrame(() => {
             initCrop();
             renderAll();
@@ -1369,10 +1480,78 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
     canvas.toBlob(blob => {
       if (!blob) return;
       els.outSize.textContent = formatBytes(blob.size);
+      setSizeStatus(blob.size);
       const url = canvas.toDataURL(mime, q);
       applyImageToPreviews(url);
     }, mime, q);
   }
+
+  function setSizeStatus(bytes) {
+    const dot = els.sizeStatus;
+    dot.className = 'status-dot';
+    let cls;
+    if (bytes < LIMITS.fileSizeGood) cls = 'good';
+    else if (bytes < LIMITS.fileSizeWarn) cls = 'warn';
+    else cls = 'bad';
+    dot.classList.add(cls);
+    dot.title = cls === 'good' ? 'Under 200 KB · ideal'
+              : cls === 'warn' ? 'Over 200 KB · acceptable but heavy'
+              : 'Over 500 KB · likely too large';
+    // show auto-compress only when too big and format supports it
+    els.autoCompressBtn.hidden = bytes < LIMITS.fileSizeGood || state.format === 'png';
+  }
+
+  function checkSourceDimensions() {
+    if (!state.sourceImage) { els.sourceWarn.hidden = true; return; }
+    const w = state.sourceImage.naturalWidth;
+    const h = state.sourceImage.naturalHeight;
+    if (w < LIMITS.minDim.w || h < LIMITS.minDim.h) {
+      els.sourceWarn.hidden = false;
+      els.sourceWarn.textContent = `⚠ Source ${w}×${h} is below recommended 1200×630 — upscaling will lose sharpness`;
+    } else {
+      els.sourceWarn.hidden = true;
+    }
+  }
+
+  async function autoCompress() {
+    if (!state.sourceImage) return;
+    if (state.format === 'png') { toast('Switch to JPEG or WEBP first'); return; }
+    const target = LIMITS.fileSizeGood;
+    const canvas = renderToCanvas();
+    if (!canvas) return;
+    const mime = getMime();
+
+    // Binary search for highest quality that fits under target
+    let lo = 0.1, hi = 1.0, best = lo, bestSize = Infinity;
+    for (let i = 0; i < 9; i++) {
+      const mid = (lo + hi) / 2;
+      const blob = await new Promise(r => canvas.toBlob(r, mime, mid));
+      if (!blob) break;
+      if (blob.size <= target) {
+        if (mid > best) { best = mid; bestSize = blob.size; }
+        lo = mid;
+      } else {
+        hi = mid;
+      }
+    }
+    if (bestSize === Infinity) {
+      // even at quality 0.1, can't fit — try WEBP if not already
+      if (state.format !== 'webp') {
+        toast('Try WEBP for smaller file size');
+      } else {
+        toast('Image too detailed to fit under 200 KB');
+      }
+      return;
+    }
+    state.quality = best;
+    const pct = Math.round(best * 100);
+    els.qualitySlider.value = pct;
+    els.qualityVal.textContent = pct + '%';
+    updateOutput();
+    toast('Compressed to ' + formatBytes(bestSize) + ' at ' + pct + '%');
+  }
+
+  els.autoCompressBtn.addEventListener('click', autoCompress);
 
   els.qualitySlider.addEventListener('input', e => {
     state.quality = parseInt(e.target.value, 10) / 100;
@@ -1451,19 +1630,72 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
     });
   }
 
+  function truncate(text, max) {
+    if (!text || text.length <= max) return text;
+    return text.slice(0, max - 1).trimEnd() + '…';
+  }
+
   function renderPreviewText() {
     const m = state.meta;
     const t = m.title || 'Your title here';
     const d = m.description || 'Your description appears here when shared on social media.';
     const s = m.site || (m.url ? safeHost(m.url) : '') || 'example.com';
     const u = m.url || ('https://' + s);
+    const tL = LIMITS.title, dL = LIMITS.description;
 
-    $('twTitle').textContent = t; $('twDesc').textContent = d; $('twDomain').textContent = s;
-    $('fbTitle').textContent = t; $('fbDesc').textContent = d; $('fbDomain').textContent = s.toUpperCase();
-    $('liTitle').textContent = t; $('liDomain').textContent = s;
-    $('waTitle').textContent = t; $('waDesc').textContent = d; $('waDomain').textContent = s; $('waUrl').textContent = u;
-    $('slSite').textContent = s; $('slTitle').textContent = t; $('slDesc').textContent = d;
-    $('dcSite').textContent = s; $('dcTitle').textContent = t; $('dcDesc').textContent = d;
+    $('twTitle').textContent = truncate(t, tL.twitter); $('twDesc').textContent = truncate(d, dL.twitter); $('twDomain').textContent = s;
+    $('fbTitle').textContent = truncate(t, tL.facebook); $('fbDesc').textContent = truncate(d, dL.facebook); $('fbDomain').textContent = s.toUpperCase();
+    $('liTitle').textContent = truncate(t, tL.linkedin); $('liDomain').textContent = s;
+    $('waTitle').textContent = truncate(t, tL.whatsapp); $('waDesc').textContent = truncate(d, dL.whatsapp); $('waDomain').textContent = s; $('waUrl').textContent = u;
+    $('slSite').textContent = s; $('slTitle').textContent = truncate(t, tL.slack); $('slDesc').textContent = d;
+    $('dcSite').textContent = s; $('dcTitle').textContent = truncate(t, tL.discord); $('dcDesc').textContent = truncate(d, dL.discord);
+
+    updateCharCounters();
+  }
+
+  function updateCharCounters() {
+    const tlen = els.metaTitle.value.length;
+    const dlen = els.metaDescription.value.length;
+    const tL = LIMITS.title, dL = LIMITS.description;
+
+    // Title
+    els.titleCount.textContent = tlen + ' / ' + tL.safe;
+    els.titleCount.classList.toggle('warn', tlen > tL.safe && tlen <= tL.facebook);
+    els.titleCount.classList.toggle('bad', tlen > tL.facebook);
+
+    const tCuts = [];
+    if (tlen > tL.whatsapp) tCuts.push('WhatsApp');
+    if (tlen > tL.twitter) tCuts.push('Twitter/LinkedIn');
+    if (tlen > tL.facebook) tCuts.push('Facebook');
+    if (tCuts.length === 0) {
+      els.titleHint.textContent = tlen > 0
+        ? '✓ Fits on all platforms'
+        : 'Recommended ≤ 60 · WhatsApp 65 · Twitter/LinkedIn 70 · Facebook 100';
+      els.titleHint.classList.remove('warn', 'bad');
+    } else {
+      els.titleHint.textContent = '⚠ Truncates on: ' + tCuts.join(' · ');
+      els.titleHint.classList.toggle('bad', tCuts.length >= 3);
+      els.titleHint.classList.toggle('warn', tCuts.length < 3);
+    }
+
+    // Description
+    els.descCount.textContent = dlen + ' / ' + dL.safe;
+    els.descCount.classList.toggle('warn', dlen > dL.safe && dlen <= dL.twitter);
+    els.descCount.classList.toggle('bad', dlen > dL.twitter);
+
+    const dCuts = [];
+    if (dlen > dL.whatsapp) dCuts.push('WhatsApp');
+    if (dlen > dL.twitter) dCuts.push('Twitter');
+    if (dCuts.length === 0) {
+      els.descHint.textContent = dlen > 0
+        ? '✓ Fits on all platforms'
+        : 'Recommended 130–160 · WhatsApp 175 · Twitter 200';
+      els.descHint.classList.remove('warn', 'bad');
+    } else {
+      els.descHint.textContent = '⚠ Truncates on: ' + dCuts.join(' · ');
+      els.descHint.classList.toggle('bad', dCuts.length >= 2);
+      els.descHint.classList.toggle('warn', dCuts.length < 2);
+    }
   }
 
   function safeHost(u) {
