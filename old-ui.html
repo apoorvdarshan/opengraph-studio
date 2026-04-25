@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OpenGraph Studio · Design, preview & export OG cards</title>
+<meta name="description" content="Crop, compress and preview Open Graph images for Twitter, Facebook, LinkedIn, WhatsApp, Slack and Discord. All in your browser." />
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0b;
+  --panel: #131316;
+  --panel-2: #1a1a1f;
+  --panel-3: #22222a;
+  --border: #2a2a33;
+  --border-2: #3a3a45;
+  --text: #f0f0f5;
+  --text-2: #a0a0b0;
+  --text-3: #6b6b78;
+  --accent: #6366f1;
+  --accent-hover: #818cf8;
+  --accent-soft: rgba(99, 102, 241, 0.15);
+  --success: #10b981;
+  --danger: #ef4444;
+  --radius: 10px;
+}
+
+html, body { height: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+header.top {
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--panel) 0%, var(--bg) 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+header.top h1 {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+header.top .logo {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, var(--accent), #a855f7);
+  border-radius: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+header.top .tagline {
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  height: calc(100vh - 65px);
+}
+@media (max-width: 980px) {
+  .layout { grid-template-columns: 1fr; height: auto; }
+  .left { border-right: none; border-bottom: 1px solid var(--border); }
+}
+
+.left {
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 24px;
+}
+.right {
+  overflow-y: auto;
+  padding: 24px 28px 60px;
+}
+
+.section { margin-bottom: 28px; }
+.section-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-bottom: 12px;
+}
+
+.tabs {
+  display: flex;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px;
+  margin-bottom: 16px;
+}
+.tabs button {
+  flex: 1;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.tabs button:hover { color: var(--text); }
+.tabs button.active {
+  background: var(--panel-3);
+  color: var(--text);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset;
+}
+
+.field { margin-bottom: 12px; }
+.field-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-2);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+input[type="text"], input[type="url"], textarea {
+  width: 100%;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+textarea { resize: vertical; min-height: 60px; line-height: 1.45; }
+
+button.primary, button.secondary {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+button.primary { background: var(--accent); color: white; }
+button.primary:hover { background: var(--accent-hover); }
+button.primary:disabled { opacity: 0.55; cursor: not-allowed; }
+button.secondary {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+button.secondary:hover { background: var(--panel-3); border-color: var(--border-2); }
+
+.url-row { display: flex; gap: 8px; }
+.url-row input { flex: 1; }
+.url-status {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-3);
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+.url-status.show { display: flex; }
+.url-status.error { color: var(--danger); }
+.url-status.success { color: var(--success); }
+
+.spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--border-2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.dropzone {
+  border: 2px dashed var(--border-2);
+  border-radius: 12px;
+  padding: 32px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--panel-2);
+  display: block;
+}
+.dropzone:hover, .dropzone.drag {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.dropzone .icon {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel-3);
+  border-radius: 10px;
+  color: var(--accent);
+}
+.dropzone .text { color: var(--text-2); font-size: 13px; }
+.dropzone .hint { color: var(--text-3); font-size: 11px; margin-top: 4px; }
+
+.editor { display: none; }
+.editor.active { display: block; }
+
+.crop-area {
+  position: relative;
+  background-color: #0f0f12;
+  background-image:
+    linear-gradient(45deg, #1a1a1f 25%, transparent 25%),
+    linear-gradient(-45deg, #1a1a1f 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #1a1a1f 75%),
+    linear-gradient(-45deg, transparent 75%, #1a1a1f 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  user-select: none;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 12px;
+}
+.crop-image-wrap { position: relative; display: inline-block; line-height: 0; }
+.crop-image-wrap img {
+  max-width: 100%;
+  max-height: 380px;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.crop-box {
+  position: absolute;
+  border: 2px solid var(--accent);
+  cursor: move;
+  box-shadow: 0 0 0 9999px rgba(0,0,0,0.55);
+  box-sizing: border-box;
+  touch-action: none;
+}
+.crop-box .grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to right, transparent calc(33.33% - 0.5px), rgba(255,255,255,0.3) calc(33.33% - 0.5px), rgba(255,255,255,0.3) calc(33.33% + 0.5px), transparent calc(33.33% + 0.5px), transparent calc(66.66% - 0.5px), rgba(255,255,255,0.3) calc(66.66% - 0.5px), rgba(255,255,255,0.3) calc(66.66% + 0.5px), transparent calc(66.66% + 0.5px)),
+    linear-gradient(to bottom, transparent calc(33.33% - 0.5px), rgba(255,255,255,0.3) calc(33.33% - 0.5px), rgba(255,255,255,0.3) calc(33.33% + 0.5px), transparent calc(33.33% + 0.5px), transparent calc(66.66% - 0.5px), rgba(255,255,255,0.3) calc(66.66% - 0.5px), rgba(255,255,255,0.3) calc(66.66% + 0.5px), transparent calc(66.66% + 0.5px));
+}
+.crop-box .handle {
+  position: absolute;
+  width: 14px; height: 14px;
+  background: var(--accent);
+  border: 2px solid white;
+  border-radius: 50%;
+  box-sizing: border-box;
+  touch-action: none;
+}
+.crop-box .handle.nw { top: -7px; left: -7px; cursor: nwse-resize; }
+.crop-box .handle.ne { top: -7px; right: -7px; cursor: nesw-resize; }
+.crop-box .handle.sw { bottom: -7px; left: -7px; cursor: nesw-resize; }
+.crop-box .handle.se { bottom: -7px; right: -7px; cursor: nwse-resize; }
+.crop-box .crop-label {
+  position: absolute;
+  top: 6px; left: 6px;
+  background: rgba(0,0,0,0.75);
+  color: white;
+  padding: 3px 7px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.controls { display: flex; flex-direction: column; gap: 14px; }
+.control-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.control-row .label { font-size: 12px; color: var(--text-2); font-weight: 500; }
+.control-row .value { font-size: 12px; color: var(--text); font-family: ui-monospace, monospace; }
+
+input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 4px;
+  background: var(--panel-3); border-radius: 2px;
+  outline: none; margin-top: 8px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 16px; height: 16px;
+  background: var(--accent); border-radius: 50%;
+  cursor: pointer; border: 2px solid var(--bg);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 16px; height: 16px; background: var(--accent);
+  border-radius: 50%; cursor: pointer; border: 2px solid var(--bg);
+}
+
+.format-toggle {
+  display: flex;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 3px;
+}
+.format-toggle button {
+  flex: 1; background: transparent; border: none;
+  color: var(--text-2); padding: 6px 10px;
+  font-size: 12px; font-weight: 500;
+  cursor: pointer; border-radius: 5px;
+  transition: all 0.15s; font-family: inherit;
+}
+.format-toggle button:hover { color: var(--text); }
+.format-toggle button.active { background: var(--accent); color: white; }
+
+.size-info {
+  display: flex; justify-content: space-between;
+  background: var(--panel-2); border: 1px solid var(--border);
+  padding: 10px 12px; border-radius: 8px; font-size: 12px;
+}
+.size-info .lbl { color: var(--text-3); margin-right: 4px; }
+.size-info .val { color: var(--text); font-family: ui-monospace, monospace; font-weight: 500; }
+
+button.download {
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  color: white; border: none;
+  padding: 12px 16px; font-size: 14px; font-weight: 600;
+  border-radius: 10px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all 0.15s; font-family: inherit;
+}
+button.download:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,0.3); }
+button.download:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.preview-tabs {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 20px;
+}
+.preview-tabs button {
+  padding: 6px 12px;
+  background: var(--panel); color: var(--text-2);
+  border: 1px solid var(--border); border-radius: 16px;
+  font-size: 12px; cursor: pointer; transition: all 0.15s;
+  font-family: inherit;
+}
+.preview-tabs button:hover { color: var(--text); border-color: var(--border-2); }
+.preview-tabs button.active {
+  background: var(--accent); color: white; border-color: var(--accent);
+}
+
+.preview-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+.preview-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.preview-card h3 {
+  font-size: 11px; font-weight: 600;
+  color: var(--text-3); text-transform: uppercase;
+  letter-spacing: 0.08em; margin-bottom: 14px;
+}
+
+/* Twitter / X */
+.tw-card {
+  background: #16181c;
+  border-radius: 16px;
+  border: 1px solid #2f3336;
+  overflow: hidden;
+  max-width: 504px;
+  font-family: -apple-system, system-ui, sans-serif;
+}
+.tw-card .img {
+  width: 100%; aspect-ratio: 1200/628;
+  background: #2f3336 center/cover no-repeat;
+  display: block;
+}
+.tw-card .body { padding: 12px 16px; }
+.tw-card .domain { color: #71767b; font-size: 13px; margin-bottom: 2px; }
+.tw-card .ttl {
+  color: #e7e9ea; font-size: 15px; font-weight: 400; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.tw-card .desc {
+  color: #71767b; font-size: 13px; margin-top: 2px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* Facebook */
+.fb-wrap { background: #f0f2f5; padding: 20px; border-radius: 12px; }
+.fb-card {
+  background: #ffffff; border-radius: 8px; overflow: hidden;
+  border: 1px solid #dadde1; max-width: 500px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+.fb-card .img { width: 100%; aspect-ratio: 1.91/1; background: #e4e6eb center/cover no-repeat; }
+.fb-card .body { padding: 10px 12px; background: #f2f3f5; }
+.fb-card .domain { font-size: 12px; color: #606770; text-transform: uppercase; margin-bottom: 3px; }
+.fb-card .ttl {
+  font-size: 17px; font-weight: 600; color: #1d2129; line-height: 1.25; margin-bottom: 3px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.fb-card .desc {
+  font-size: 13px; color: #606770;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* LinkedIn */
+.li-wrap { background: #f4f2ee; padding: 20px; border-radius: 12px; }
+.li-card {
+  background: #ffffff; border: 1px solid #e0dfdc; border-radius: 8px;
+  overflow: hidden; max-width: 500px;
+  font-family: -apple-system, system-ui, sans-serif;
+}
+.li-card .img { width: 100%; aspect-ratio: 1.91/1; background: #e4e6eb center/cover no-repeat; }
+.li-card .body { padding: 12px 14px; background: #edf3f8; }
+.li-card .ttl {
+  font-size: 14px; font-weight: 600; color: rgba(0,0,0,0.9); line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  margin-bottom: 4px;
+}
+.li-card .domain { font-size: 12px; color: rgba(0,0,0,0.6); }
+
+/* WhatsApp */
+.wa-wrap {
+  background: #0b141a;
+  padding: 24px 18px;
+  border-radius: 12px;
+}
+.wa-bubble {
+  background: #005c4b;
+  border-radius: 8px 0 8px 8px;
+  padding: 4px;
+  max-width: 340px;
+  margin-left: auto;
+  font-family: 'Segoe UI', sans-serif;
+  position: relative;
+  box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+}
+.wa-bubble:before {
+  content: ''; position: absolute;
+  top: 0; right: -6px; width: 0; height: 0;
+  border-left: 6px solid #005c4b;
+  border-bottom: 6px solid transparent;
+}
+.wa-bubble .preview {
+  background: rgba(0,0,0,0.18);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.wa-bubble .img {
+  width: 100%; aspect-ratio: 1.91/1;
+  background: #1f2c34 center/cover no-repeat; display: block;
+}
+.wa-bubble .meta { padding: 6px 10px 8px; }
+.wa-bubble .ttl {
+  color: #e9edef; font-size: 13.5px; font-weight: 500; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.wa-bubble .desc {
+  color: #8696a0; font-size: 12.5px; line-height: 1.3; margin-top: 2px;
+  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+}
+.wa-bubble .domain { color: #8696a0; font-size: 11.5px; margin-top: 3px; }
+.wa-bubble .url {
+  color: #53bdeb; font-size: 13px;
+  padding: 4px 10px 6px; word-break: break-all;
+}
+
+/* Slack */
+.sl-wrap { background: #ffffff; padding: 20px; border-radius: 12px; color: #1d1c1d; }
+.sl-card {
+  display: flex; gap: 12px;
+  font-family: Lato, -apple-system, sans-serif;
+  border-left: 4px solid #dddddd;
+  padding: 4px 0 4px 12px;
+  max-width: 520px;
+}
+.sl-card .content { flex: 1; min-width: 0; }
+.sl-card .site {
+  font-size: 13px; color: #1d1c1d; font-weight: 700; margin-bottom: 4px;
+}
+.sl-card .ttl {
+  color: #1264a3; font-size: 15px; font-weight: 700; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.sl-card .desc {
+  color: #1d1c1d; font-size: 14px; line-height: 1.4; margin-top: 4px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.sl-card .img {
+  width: 100%; max-width: 360px; aspect-ratio: 1.91/1;
+  background: #f4f4f4 center/cover no-repeat;
+  margin-top: 10px; border-radius: 6px;
+}
+
+/* Discord */
+.dc-wrap { background: #313338; padding: 20px; border-radius: 12px; }
+.dc-card {
+  background: #2b2d31;
+  border-left: 4px solid #5865f2;
+  border-radius: 4px;
+  padding: 12px 16px;
+  max-width: 432px;
+  font-family: 'gg sans', -apple-system, sans-serif;
+  color: #dbdee1;
+}
+.dc-card .site { font-size: 12px; color: #b5bac1; margin-bottom: 4px; }
+.dc-card .ttl {
+  color: #00a8fc; font-size: 16px; font-weight: 600; line-height: 1.25; margin-bottom: 6px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.dc-card .desc {
+  color: #dbdee1; font-size: 14px; line-height: 1.4; margin-bottom: 10px;
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+}
+.dc-card .img {
+  width: 100%; aspect-ratio: 1.91/1;
+  background: #1e1f22 center/cover no-repeat;
+  border-radius: 4px;
+}
+
+.placeholder {
+  background-color: rgba(99,102,241,0.06) !important;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(99,102,241,0.08) 0 10px, transparent 10px 20px) !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.35);
+  font-size: 11px;
+  font-family: ui-monospace, monospace;
+  letter-spacing: 0.04em;
+}
+
+.meta-output {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 4px;
+}
+.meta-output-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px; gap: 12px; flex-wrap: wrap;
+}
+.meta-output-title { font-size: 14px; font-weight: 600; }
+.meta-output-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+.meta-output pre {
+  background: #08080a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+  font-size: 12px;
+  color: #d1d5db;
+  overflow-x: auto;
+  line-height: 1.65;
+  white-space: pre;
+}
+.meta-output .tag { color: #60a5fa; }
+.meta-output .attr { color: #c084fc; }
+.meta-output .str { color: #34d399; }
+.meta-output .empty { color: var(--text-3); font-style: italic; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--panel-3); border-radius: 10px; border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--border-2); }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--panel-3); color: var(--text);
+  padding: 10px 18px; border-radius: 8px;
+  border: 1px solid var(--border-2); font-size: 13px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  opacity: 0; transition: all 0.25s;
+  z-index: 100; pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1><span class="logo">OG</span> OpenGraph Studio</h1>
+  <div class="tagline">Crop · compress · preview · export</div>
+</header>
+
+<div class="layout">
+  <aside class="left">
+
+    <div class="section">
+      <div class="section-title">Source</div>
+      <div class="tabs" id="modeTabs">
+        <button data-mode="url" class="active">From URL</button>
+        <button data-mode="image">Upload Image</button>
+      </div>
+
+      <div id="urlMode">
+        <div class="url-row">
+          <input type="url" id="urlInput" placeholder="https://example.com" />
+          <button class="primary" id="fetchBtn">Fetch</button>
+        </div>
+        <div class="url-status" id="urlStatus"></div>
+      </div>
+
+      <div id="imageMode" style="display:none">
+        <label class="dropzone" id="dropzone" for="fileInput">
+          <div class="icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <div class="text"><strong>Drop, click, or paste</strong> an image</div>
+          <div class="hint">JPG · PNG · WEBP &nbsp;·&nbsp; Cmd/Ctrl + V supported</div>
+          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden />
+        </label>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Metadata</div>
+      <div class="field">
+        <label class="field-label">Title</label>
+        <input type="text" id="metaTitle" placeholder="Your awesome page title" maxlength="160" />
+      </div>
+      <div class="field">
+        <label class="field-label">Description</label>
+        <textarea id="metaDescription" placeholder="A compelling description for shared links" maxlength="320"></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label">Site name / domain</label>
+        <input type="text" id="metaSite" placeholder="example.com" />
+      </div>
+      <div class="field">
+        <label class="field-label">URL</label>
+        <input type="url" id="metaUrl" placeholder="https://example.com/page" />
+      </div>
+    </div>
+
+    <div class="section editor" id="editorSection">
+      <div class="section-title">Editor &nbsp;·&nbsp; Output 1200 × 630</div>
+
+      <div class="crop-area" id="cropArea">
+        <div class="crop-image-wrap" id="cropWrap">
+          <img id="cropImg" alt="" />
+          <div class="crop-box" id="cropBox">
+            <div class="grid"></div>
+            <div class="crop-label" id="cropLabel">1200 × 630</div>
+            <div class="handle nw" data-handle="nw"></div>
+            <div class="handle ne" data-handle="ne"></div>
+            <div class="handle sw" data-handle="sw"></div>
+            <div class="handle se" data-handle="se"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="secondary" id="resetCropBtn" style="align-self:flex-start;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          Reset crop
+        </button>
+
+        <div>
+          <div class="control-row">
+            <span class="label">Quality</span>
+            <span class="value" id="qualityVal">85%</span>
+          </div>
+          <input type="range" id="qualitySlider" min="10" max="100" value="85" />
+        </div>
+
+        <div>
+          <div class="control-row" style="margin-bottom:6px">
+            <span class="label">Format</span>
+            <span class="value" id="formatHint">lossy</span>
+          </div>
+          <div class="format-toggle" id="formatToggle">
+            <button data-fmt="jpeg" class="active">JPEG</button>
+            <button data-fmt="png">PNG</button>
+            <button data-fmt="webp">WEBP</button>
+          </div>
+        </div>
+
+        <div class="size-info">
+          <div><span class="lbl">Original</span><span class="val" id="origSize">—</span></div>
+          <div><span class="lbl">Output</span><span class="val" id="outSize">—</span></div>
+        </div>
+
+        <button class="download" id="downloadBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download HD &nbsp;·&nbsp; 1200 × 630
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="right">
+    <div class="section-title" style="margin-bottom:14px">Live Previews</div>
+    <div class="preview-tabs" id="previewTabs">
+      <button data-prev="all" class="active">All</button>
+      <button data-prev="twitter">Twitter / X</button>
+      <button data-prev="facebook">Facebook</button>
+      <button data-prev="linkedin">LinkedIn</button>
+      <button data-prev="whatsapp">WhatsApp</button>
+      <button data-prev="slack">Slack</button>
+      <button data-prev="discord">Discord</button>
+    </div>
+
+    <div class="preview-grid" id="previewGrid">
+
+      <div class="preview-card" data-preview="twitter">
+        <h3>Twitter / X &nbsp;·&nbsp; summary_large_image</h3>
+        <div class="tw-card">
+          <div class="img placeholder" id="twImg">1200 × 630</div>
+          <div class="body">
+            <div class="domain" id="twDomain">example.com</div>
+            <div class="ttl" id="twTitle">Your title here</div>
+            <div class="desc" id="twDesc">Your description appears here when shared on social media.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-card" data-preview="facebook">
+        <h3>Facebook</h3>
+        <div class="fb-wrap">
+          <div class="fb-card">
+            <div class="img placeholder" id="fbImg">1200 × 630</div>
+            <div class="body">
+              <div class="domain" id="fbDomain">EXAMPLE.COM</div>
+              <div class="ttl" id="fbTitle">Your title here</div>
+              <div class="desc" id="fbDesc">Your description appears here when shared on social media.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-card" data-preview="linkedin">
+        <h3>LinkedIn</h3>
+        <div class="li-wrap">
+          <div class="li-card">
+            <div class="img placeholder" id="liImg">1200 × 630</div>
+            <div class="body">
+              <div class="ttl" id="liTitle">Your title here</div>
+              <div class="domain" id="liDomain">example.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-card" data-preview="whatsapp">
+        <h3>WhatsApp</h3>
+        <div class="wa-wrap">
+          <div class="wa-bubble">
+            <div class="preview">
+              <div class="img placeholder" id="waImg">1200 × 630</div>
+              <div class="meta">
+                <div class="ttl" id="waTitle">Your title here</div>
+                <div class="desc" id="waDesc">Your description appears here.</div>
+                <div class="domain" id="waDomain">example.com</div>
+              </div>
+            </div>
+            <div class="url" id="waUrl">https://example.com</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-card" data-preview="slack">
+        <h3>Slack</h3>
+        <div class="sl-wrap">
+          <div class="sl-card">
+            <div class="content">
+              <div class="site" id="slSite">example.com</div>
+              <div class="ttl" id="slTitle">Your title here</div>
+              <div class="desc" id="slDesc">Your description appears here when shared on social media.</div>
+              <div class="img placeholder" id="slImg">1200 × 630</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-card" data-preview="discord">
+        <h3>Discord</h3>
+        <div class="dc-wrap">
+          <div class="dc-card">
+            <div class="site" id="dcSite">example.com</div>
+            <div class="ttl" id="dcTitle">Your title here</div>
+            <div class="desc" id="dcDesc">Your description appears here when shared on social media.</div>
+            <div class="img placeholder" id="dcImg">1200 × 630</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="meta-output">
+      <div class="meta-output-header">
+        <div>
+          <div class="meta-output-title">OG Meta Tags</div>
+          <div class="meta-output-sub">Drop into your &lt;head&gt;</div>
+        </div>
+        <button class="secondary" id="copyMetaBtn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy tags
+        </button>
+      </div>
+      <pre id="metaOutput"></pre>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  const ASPECT = 1200 / 630;
+  const PROXY = (u) => 'https://corsproxy.io/?url=' + encodeURIComponent(u);
+
+  const state = {
+    sourceImage: null,
+    sourceBlob: null,
+    sourceObjectUrl: null,
+    sourceUrl: null,
+    crop: { x: 0, y: 0, w: 0, h: 0 },
+    quality: 0.85,
+    format: 'jpeg',
+    meta: { title: '', description: '', site: '', url: '' }
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    modeTabs: $('modeTabs'), urlMode: $('urlMode'), imageMode: $('imageMode'),
+    urlInput: $('urlInput'), fetchBtn: $('fetchBtn'), urlStatus: $('urlStatus'),
+    dropzone: $('dropzone'), fileInput: $('fileInput'),
+    metaTitle: $('metaTitle'), metaDescription: $('metaDescription'),
+    metaSite: $('metaSite'), metaUrl: $('metaUrl'),
+    editorSection: $('editorSection'), cropArea: $('cropArea'),
+    cropWrap: $('cropWrap'), cropImg: $('cropImg'), cropBox: $('cropBox'),
+    cropLabel: $('cropLabel'), resetCropBtn: $('resetCropBtn'),
+    qualitySlider: $('qualitySlider'), qualityVal: $('qualityVal'),
+    formatToggle: $('formatToggle'), formatHint: $('formatHint'),
+    origSize: $('origSize'), outSize: $('outSize'),
+    downloadBtn: $('downloadBtn'),
+    previewTabs: $('previewTabs'), previewGrid: $('previewGrid'),
+    metaOutput: $('metaOutput'), copyMetaBtn: $('copyMetaBtn'),
+    toast: $('toast')
+  };
+
+  // ===== Toast =====
+  let toastTimer;
+  function toast(msg) {
+    els.toast.textContent = msg;
+    els.toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => els.toast.classList.remove('show'), 1800);
+  }
+
+  // ===== Mode tabs =====
+  els.modeTabs.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    [...els.modeTabs.children].forEach(b => b.classList.toggle('active', b === btn));
+    const mode = btn.dataset.mode;
+    els.urlMode.style.display = mode === 'url' ? '' : 'none';
+    els.imageMode.style.display = mode === 'image' ? '' : 'none';
+  });
+
+  // ===== URL fetch =====
+  function setUrlStatus(text, type) {
+    if (!text) { els.urlStatus.className = 'url-status'; els.urlStatus.innerHTML = ''; return; }
+    els.urlStatus.className = 'url-status show' + (type ? ' ' + type : '');
+    els.urlStatus.innerHTML = (type === 'loading' ? '<span class="spinner"></span>' : '') +
+      '<span></span>';
+    els.urlStatus.lastElementChild.textContent = text;
+  }
+
+  async function fetchOgFromUrl() {
+    let url = els.urlInput.value.trim();
+    if (!url) { setUrlStatus('Enter a URL first', 'error'); return; }
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+
+    els.fetchBtn.disabled = true;
+    setUrlStatus('Fetching page…', 'loading');
+
+    try {
+      const res = await fetch(PROXY(url));
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const m = (sel) => doc.querySelector(sel)?.getAttribute('content') || '';
+
+      const og = {
+        title: m('meta[property="og:title"]') || m('meta[name="twitter:title"]') ||
+               doc.querySelector('title')?.textContent?.trim() || '',
+        description: m('meta[property="og:description"]') || m('meta[name="twitter:description"]') ||
+                     m('meta[name="description"]') || '',
+        image: m('meta[property="og:image"]') || m('meta[name="twitter:image"]') ||
+               m('meta[name="twitter:image:src"]') || '',
+        url: m('meta[property="og:url"]') || url,
+        site: m('meta[property="og:site_name"]') || safeHost(url)
+      };
+
+      els.metaTitle.value = og.title;
+      els.metaDescription.value = og.description;
+      els.metaSite.value = og.site;
+      els.metaUrl.value = og.url;
+      Object.assign(state.meta, og);
+
+      if (og.image) {
+        const absImg = new URL(og.image, url).href;
+        state.sourceUrl = absImg;
+        setUrlStatus('Loading image…', 'loading');
+        try {
+          await loadImageFromUrl(absImg);
+          setUrlStatus('Loaded · "' + (og.title || 'untitled').slice(0, 60) + '"', 'success');
+        } catch (imgErr) {
+          setUrlStatus('Page parsed · couldn\'t load og:image (' + imgErr.message + ')', 'error');
+        }
+      } else {
+        setUrlStatus('Page loaded · no og:image found', 'success');
+      }
+
+      renderAll();
+    } catch (err) {
+      setUrlStatus('Failed: ' + err.message, 'error');
+    } finally {
+      els.fetchBtn.disabled = false;
+    }
+  }
+
+  async function loadImageFromUrl(imgUrl) {
+    const res = await fetch(PROXY(imgUrl));
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const blob = await res.blob();
+    if (!/^image\//i.test(blob.type)) throw new Error('not an image');
+    await loadImageFromBlob(blob);
+  }
+
+  els.fetchBtn.addEventListener('click', fetchOgFromUrl);
+  els.urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') fetchOgFromUrl(); });
+
+  // ===== Image load =====
+  function loadImageFromBlob(blob) {
+    return new Promise((resolve, reject) => {
+      if (state.sourceObjectUrl) URL.revokeObjectURL(state.sourceObjectUrl);
+      state.sourceBlob = blob;
+      state.sourceObjectUrl = URL.createObjectURL(blob);
+
+      const img = new Image();
+      img.onload = () => {
+        state.sourceImage = img;
+        els.cropImg.onload = () => {
+          els.editorSection.classList.add('active');
+          els.origSize.textContent = formatBytes(blob.size);
+          requestAnimationFrame(() => {
+            initCrop();
+            renderAll();
+            resolve();
+          });
+        };
+        els.cropImg.onerror = () => reject(new Error('display load failed'));
+        els.cropImg.src = state.sourceObjectUrl;
+      };
+      img.onerror = () => reject(new Error('decode failed'));
+      img.src = state.sourceObjectUrl;
+    });
+  }
+
+  function handleFile(file) {
+    if (!file || !/^image\/(png|jpe?g|webp)$/i.test(file.type)) {
+      toast('Unsupported file type'); return;
+    }
+    state.sourceUrl = null;
+    loadImageFromBlob(file).catch(err => toast('Could not load image: ' + err.message));
+  }
+
+  els.fileInput.addEventListener('change', e => {
+    if (e.target.files[0]) handleFile(e.target.files[0]);
+  });
+
+  ['dragover', 'dragenter'].forEach(ev => {
+    els.dropzone.addEventListener(ev, e => {
+      e.preventDefault(); els.dropzone.classList.add('drag');
+    });
+  });
+  ['dragleave', 'dragend'].forEach(ev => {
+    els.dropzone.addEventListener(ev, () => els.dropzone.classList.remove('drag'));
+  });
+  els.dropzone.addEventListener('drop', e => {
+    e.preventDefault();
+    els.dropzone.classList.remove('drag');
+    const file = e.dataTransfer?.files?.[0];
+    if (file) handleFile(file);
+  });
+
+  // Paste anywhere
+  document.addEventListener('paste', e => {
+    if (document.activeElement && /INPUT|TEXTAREA/.test(document.activeElement.tagName)) {
+      // allow pasting text into inputs
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      const hasImage = [...items].some(i => i.type.startsWith('image/'));
+      if (!hasImage) return;
+    }
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        const file = item.getAsFile();
+        if (file) {
+          [...els.modeTabs.children].forEach(b => b.classList.toggle('active', b.dataset.mode === 'image'));
+          els.urlMode.style.display = 'none';
+          els.imageMode.style.display = '';
+          handleFile(file);
+          e.preventDefault();
+        }
+        break;
+      }
+    }
+  });
+
+  // ===== Crop tool =====
+  function getDisplaySize() {
+    return { w: els.cropImg.clientWidth, h: els.cropImg.clientHeight };
+  }
+
+  function initCrop() {
+    const { w, h } = getDisplaySize();
+    if (!w || !h) return;
+    let bw, bh;
+    if (w / h > ASPECT) { bh = h; bw = bh * ASPECT; }
+    else { bw = w; bh = bw / ASPECT; }
+    state.crop = { x: (w - bw) / 2, y: (h - bh) / 2, w: bw, h: bh };
+    renderCrop();
+    updateOutput();
+  }
+
+  function renderCrop() {
+    const c = state.crop;
+    els.cropBox.style.left = c.x + 'px';
+    els.cropBox.style.top = c.y + 'px';
+    els.cropBox.style.width = c.w + 'px';
+    els.cropBox.style.height = c.h + 'px';
+    els.cropLabel.textContent = '1200 × 630';
+  }
+
+  let drag = null;
+  function startDrag(mode, e) {
+    drag = {
+      mode,
+      startX: e.clientX, startY: e.clientY,
+      startBox: { ...state.crop }
+    };
+    try { e.target.setPointerCapture(e.pointerId); } catch {}
+    e.preventDefault();
+  }
+
+  els.cropBox.addEventListener('pointerdown', e => {
+    if (e.target.classList.contains('handle')) return;
+    startDrag('move', e);
+  });
+  els.cropBox.querySelectorAll('.handle').forEach(h => {
+    h.addEventListener('pointerdown', e => {
+      e.stopPropagation();
+      startDrag(h.dataset.handle, e);
+    });
+  });
+
+  document.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const { w: dw, h: dh } = getDisplaySize();
+    const dx = e.clientX - drag.startX;
+    const dy = e.clientY - drag.startY;
+    let { x, y, w, h } = drag.startBox;
+
+    if (drag.mode === 'move') {
+      x = Math.max(0, Math.min(dw - w, x + dx));
+      y = Math.max(0, Math.min(dh - h, y + dy));
+    } else {
+      // anchor-based resize maintaining aspect ratio
+      const a = {
+        se: { ax: x, ay: y, mxw: dw - x, mxh: dh - y, sx: 1 },
+        sw: { ax: x + w, ay: y, mxw: x + w, mxh: dh - y, sx: -1 },
+        ne: { ax: x, ay: y + h, mxw: dw - x, mxh: y + h, sx: 1 },
+        nw: { ax: x + w, ay: y + h, mxw: x + w, mxh: y + h, sx: -1 }
+      }[drag.mode];
+
+      let desiredW = w + a.sx * dx;
+      const maxW = Math.min(a.mxw, a.mxh * ASPECT);
+      desiredW = Math.max(40, Math.min(desiredW, maxW));
+      const newW = desiredW;
+      const newH = newW / ASPECT;
+
+      let nx, ny;
+      if (drag.mode === 'se') { nx = a.ax; ny = a.ay; }
+      else if (drag.mode === 'sw') { nx = a.ax - newW; ny = a.ay; }
+      else if (drag.mode === 'ne') { nx = a.ax; ny = a.ay - newH; }
+      else { nx = a.ax - newW; ny = a.ay - newH; }
+      x = nx; y = ny; w = newW; h = newH;
+    }
+    state.crop = { x, y, w, h };
+    renderCrop();
+    scheduleOutputUpdate();
+  });
+
+  document.addEventListener('pointerup', () => {
+    if (drag) { drag = null; updateOutput(); }
+  });
+
+  els.resetCropBtn.addEventListener('click', initCrop);
+
+  let resizeRaf;
+  window.addEventListener('resize', () => {
+    if (!state.sourceImage) return;
+    cancelAnimationFrame(resizeRaf);
+    resizeRaf = requestAnimationFrame(initCrop);
+  });
+
+  // ===== Output =====
+  let pendingOutput = null;
+  function scheduleOutputUpdate() {
+    if (pendingOutput) return;
+    pendingOutput = requestAnimationFrame(() => {
+      pendingOutput = null;
+      updateOutput();
+    });
+  }
+
+  function getMime() {
+    return state.format === 'png' ? 'image/png'
+         : state.format === 'webp' ? 'image/webp'
+         : 'image/jpeg';
+  }
+  function getExt() {
+    return state.format === 'png' ? 'png'
+         : state.format === 'webp' ? 'webp'
+         : 'jpg';
+  }
+  function renderToCanvas() {
+    if (!state.sourceImage) return null;
+    const canvas = document.createElement('canvas');
+    canvas.width = 1200; canvas.height = 630;
+    const ctx = canvas.getContext('2d');
+    const { w: dw, h: dh } = getDisplaySize();
+    if (!dw || !dh) return null;
+    const sx = state.crop.x / dw * state.sourceImage.naturalWidth;
+    const sy = state.crop.y / dh * state.sourceImage.naturalHeight;
+    const sw = state.crop.w / dw * state.sourceImage.naturalWidth;
+    const sh = state.crop.h / dh * state.sourceImage.naturalHeight;
+    ctx.drawImage(state.sourceImage, sx, sy, sw, sh, 0, 0, 1200, 630);
+    return canvas;
+  }
+
+  function updateOutput() {
+    if (!state.sourceImage) return;
+    const canvas = renderToCanvas();
+    if (!canvas) return;
+    const mime = getMime();
+    const q = state.format === 'png' ? undefined : state.quality;
+    canvas.toBlob(blob => {
+      if (!blob) return;
+      els.outSize.textContent = formatBytes(blob.size);
+      const url = canvas.toDataURL(mime, q);
+      applyImageToPreviews(url);
+    }, mime, q);
+  }
+
+  els.qualitySlider.addEventListener('input', e => {
+    state.quality = parseInt(e.target.value, 10) / 100;
+    els.qualityVal.textContent = e.target.value + '%';
+    if (state.format === 'png') return; // png ignores quality
+    scheduleOutputUpdate();
+  });
+
+  els.formatToggle.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    [...els.formatToggle.children].forEach(b => b.classList.toggle('active', b === btn));
+    state.format = btn.dataset.fmt;
+    els.formatHint.textContent = state.format === 'png' ? 'lossless' : 'lossy';
+    els.qualitySlider.disabled = state.format === 'png';
+    els.qualitySlider.style.opacity = state.format === 'png' ? '0.4' : '1';
+    updateOutput();
+  });
+
+  // ===== Download =====
+  els.downloadBtn.addEventListener('click', () => {
+    if (!state.sourceImage) { toast('Load an image first'); return; }
+    const canvas = renderToCanvas();
+    if (!canvas) return;
+    const mime = getMime();
+    const q = state.format === 'png' ? undefined : state.quality;
+    canvas.toBlob(blob => {
+      if (!blob) { toast('Export failed'); return; }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'og-image.' + getExt();
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      toast('Downloaded · ' + formatBytes(blob.size));
+    }, mime, q);
+  });
+
+  // ===== Metadata inputs =====
+  ['metaTitle', 'metaDescription', 'metaSite', 'metaUrl'].forEach(id => {
+    els[id].addEventListener('input', () => {
+      state.meta = {
+        title: els.metaTitle.value,
+        description: els.metaDescription.value,
+        site: els.metaSite.value,
+        url: els.metaUrl.value
+      };
+      renderPreviewText();
+      renderMetaTags();
+    });
+  });
+
+  els.metaUrl.addEventListener('blur', () => {
+    if (els.metaUrl.value && !els.metaSite.value) {
+      const host = safeHost(els.metaUrl.value);
+      if (host) {
+        els.metaSite.value = host;
+        els.metaSite.dispatchEvent(new Event('input'));
+      }
+    }
+  });
+
+  // ===== Previews =====
+  function applyImageToPreviews(url) {
+    const ids = ['twImg', 'fbImg', 'liImg', 'waImg', 'slImg', 'dcImg'];
+    ids.forEach(id => {
+      const el = $(id);
+      if (url) {
+        el.style.backgroundImage = 'url("' + url + '")';
+        el.classList.remove('placeholder');
+        el.textContent = '';
+      } else {
+        el.style.backgroundImage = '';
+        el.classList.add('placeholder');
+        el.textContent = '1200 × 630';
+      }
+    });
+  }
+
+  function renderPreviewText() {
+    const m = state.meta;
+    const t = m.title || 'Your title here';
+    const d = m.description || 'Your description appears here when shared on social media.';
+    const s = m.site || (m.url ? safeHost(m.url) : '') || 'example.com';
+    const u = m.url || ('https://' + s);
+
+    $('twTitle').textContent = t; $('twDesc').textContent = d; $('twDomain').textContent = s;
+    $('fbTitle').textContent = t; $('fbDesc').textContent = d; $('fbDomain').textContent = s.toUpperCase();
+    $('liTitle').textContent = t; $('liDomain').textContent = s;
+    $('waTitle').textContent = t; $('waDesc').textContent = d; $('waDomain').textContent = s; $('waUrl').textContent = u;
+    $('slSite').textContent = s; $('slTitle').textContent = t; $('slDesc').textContent = d;
+    $('dcSite').textContent = s; $('dcTitle').textContent = t; $('dcDesc').textContent = d;
+  }
+
+  function safeHost(u) {
+    try { return new URL(/^https?:\/\//i.test(u) ? u : 'https://' + u).hostname; }
+    catch { return ''; }
+  }
+
+  els.previewTabs.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    [...els.previewTabs.children].forEach(b => b.classList.toggle('active', b === btn));
+    const sel = btn.dataset.prev;
+    [...els.previewGrid.children].forEach(card => {
+      card.style.display = (sel === 'all' || card.dataset.preview === sel) ? '' : 'none';
+    });
+  });
+
+  // ===== Meta tag output =====
+  function escapeAttr(s) {
+    return (s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function escapeHtml(s) {
+    return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function buildLines() {
+    const m = state.meta;
+    const imgUrl = state.sourceUrl || '';
+    return [
+      ['property','og:title', m.title],
+      ['property','og:description', m.description],
+      ['property','og:image', imgUrl],
+      ['property','og:url', m.url],
+      ['property','og:type', 'website'],
+      ['property','og:site_name', m.site],
+      ['name','twitter:card', 'summary_large_image'],
+      ['name','twitter:title', m.title],
+      ['name','twitter:description', m.description],
+      ['name','twitter:image', imgUrl]
+    ].filter(([,, v]) => v);
+  }
+
+  function renderMetaTags() {
+    const lines = buildLines();
+    if (!lines.length) {
+      els.metaOutput.innerHTML = '<span class="empty">Add a title, description, or fetch a URL to generate tags…</span>';
+      return;
+    }
+    els.metaOutput.innerHTML = lines.map(([attr, key, val]) =>
+      '<span class="tag">&lt;meta</span> ' +
+      '<span class="attr">' + attr + '</span>=' +
+      '<span class="str">"' + escapeHtml(key) + '"</span> ' +
+      '<span class="attr">content</span>=' +
+      '<span class="str">"' + escapeHtml(val) + '"</span> ' +
+      '<span class="tag">/&gt;</span>'
+    ).join('\n');
+  }
+
+  function getRawMetaTags() {
+    return buildLines().map(([a, k, v]) =>
+      '<meta ' + a + '="' + escapeAttr(k) + '" content="' + escapeAttr(v) + '" />'
+    ).join('\n');
+  }
+
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        return true;
+      } catch { return false; }
+    }
+  }
+
+  els.copyMetaBtn.addEventListener('click', async () => {
+    const text = getRawMetaTags();
+    if (!text) { toast('Nothing to copy yet'); return; }
+    toast(await copyText(text) ? 'Copied to clipboard' : 'Copy failed');
+  });
+
+  // ===== Render All =====
+  function renderAll() {
+    renderPreviewText();
+    renderMetaTags();
+    if (state.sourceImage) updateOutput();
+    else applyImageToPreviews(null);
+  }
+
+  function formatBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1024 * 1024) return (b / 1024).toFixed(1) + ' KB';
+    return (b / 1024 / 1024).toFixed(2) + ' MB';
+  }
+
+  renderAll();
+})();
+</script>
+</body>
+</html>
