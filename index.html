@@ -1524,18 +1524,28 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
     (u) => 'https://cors.eu.org/' + u
   ];
 
-  async function proxyFetch(url) {
-    let lastErr;
-    for (const build of PROXIES) {
-      try {
-        const res = await fetch(build(url));
-        if (res.ok) return res;
-        lastErr = new Error('HTTP ' + res.status);
-      } catch (e) {
-        lastErr = e;
-      }
+  async function proxyFetch(url, timeoutMs = 8000) {
+    // Race all proxies in parallel — first healthy response wins, the rest are aborted.
+    const controllers = PROXIES.map(() => new AbortController());
+    const timers = controllers.map(c => setTimeout(() => c.abort(), timeoutMs));
+
+    const attempts = PROXIES.map((build, i) =>
+      fetch(build(url), { signal: controllers[i].signal }).then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return { res: r, idx: i };
+      })
+    );
+
+    try {
+      const winner = await Promise.any(attempts);
+      controllers.forEach((c, i) => { if (i !== winner.idx) c.abort(); });
+      timers.forEach(t => clearTimeout(t));
+      return winner.res;
+    } catch (agg) {
+      timers.forEach(t => clearTimeout(t));
+      const errs = (agg && agg.errors) || [agg];
+      throw new Error(errs.map(e => e && e.message ? e.message : String(e)).join(' · '));
     }
-    throw lastErr || new Error('All proxies unreachable');
   }
 
   // Per-platform recommended limits (where omitted, platform doesn't truncate or doesn't show field)
