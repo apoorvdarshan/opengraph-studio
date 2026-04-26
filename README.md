@@ -1,13 +1,13 @@
 <p align="center">
-  <a href="https://opengraph-studio.vercel.app/">
-    <img src="https://opengraph-studio.vercel.app/favicon.svg" alt="OpenGraph Studio logo" width="96" height="96">
+  <a href="https://www.opengraph.website/">
+    <img src="https://www.opengraph.website/favicon.svg" alt="OpenGraph Studio logo" width="96" height="96">
   </a>
 </p>
 
 <h1 align="center">OpenGraph Studio</h1>
 
 <p align="center">
-  <strong>Live → <a href="https://opengraph-studio.vercel.app/">opengraph-studio.vercel.app</a></strong>
+  <strong>Live → <a href="https://www.opengraph.website/">opengraph.website</a></strong>
 </p>
 
 <p align="center">
@@ -45,7 +45,7 @@ A single-page workshop for designing, previewing, and exporting Open Graph share
 
 ## Live demo
 
-**[opengraph-studio.vercel.app](https://opengraph-studio.vercel.app/)** — hosted on Vercel.
+**[opengraph.website](https://www.opengraph.website/)** — hosted on Vercel.
 
 Or run it locally — no install required:
 
@@ -94,7 +94,7 @@ The whole app is in `index.html` — no build, no `node_modules`, no toolchain. 
 
 Drop `index.html` on any static host:
 
-- **Vercel** — connect the repo (this is what [opengraph-studio.vercel.app](https://opengraph-studio.vercel.app/) uses); Vercel Web Analytics works out of the box via the script in the page.
+- **Vercel** — connect the repo (this is what [opengraph.website](https://www.opengraph.website/) uses); Vercel Web Analytics works out of the box via the script in the page.
 - **GitHub Pages** — Settings → Pages → deploy from `main`. The Vercel Analytics script will silently 404; remove it if you don't want the console line.
 - **Netlify / Cloudflare Pages** — drag-and-drop the file, or connect the repo.
 
@@ -102,7 +102,7 @@ No server, no API, no env vars required.
 
 ## Privacy
 
-The hosted site at [opengraph-studio.vercel.app](https://opengraph-studio.vercel.app/) uses [Vercel Web Analytics](https://vercel.com/docs/analytics) — privacy-friendly, no cookies, no IP storage, GDPR-compliant. All image processing happens locally in your browser; uploaded images and pasted URLs never leave your device.
+The hosted site at [opengraph.website](https://www.opengraph.website/) uses [Vercel Web Analytics](https://vercel.com/docs/analytics) — privacy-friendly, no cookies, no IP storage, GDPR-compliant. All image processing happens locally in your browser; uploaded images and pasted URLs never leave your device.
 
 ## Roadmap
 

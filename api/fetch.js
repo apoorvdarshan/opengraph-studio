@@ -12,7 +12,7 @@ const BLOCKED_HOSTS = new Set([
 ]);
 
 const BROWSER_HEADERS = {
-  'User-Agent': 'Mozilla/5.0 (compatible; OpenGraphStudio/1.0; +https://opengraph-studio.vercel.app)',
+  'User-Agent': 'Mozilla/5.0 (compatible; OpenGraphStudio/1.0; +https://www.opengraph.website)',
   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
   'Accept-Language': 'en-US,en;q=0.9'
 };
