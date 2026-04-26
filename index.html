@@ -12,23 +12,29 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0e0e10;
-  --bg-elev: #131316;
-  --panel: #18181c;
-  --panel-2: #1f1f24;
-  --panel-3: #26262c;
-  --border: #25252b;
-  --border-2: #34343c;
-  --text: #f4f4ef;
-  --text-2: #aaaaa3;
-  --text-3: #74746d;
-  --text-4: #4d4d49;
-  --accent: #dc2626;
-  --accent-2: #ef4444;
-  --accent-soft: rgba(220, 38, 38, 0.13);
-  --accent-glow: rgba(220, 38, 38, 0.22);
+  --bg: #0c0d12;
+  --bg-elev: #11131a;
+  --panel: #181a23;
+  --panel-2: #20232f;
+  --panel-3: #2a2d3b;
+  --border: #25283400;
+  --border: #262936;
+  --border-2: #363a4a;
+  --text: #f3f0e8;
+  --text-2: #a7a5ad;
+  --text-3: #72727c;
+  --text-4: #4c4c55;
+  --accent: #a78bfa;
+  --accent-2: #c4b5fd;
+  --accent-rich: #7c3aed;
+  --accent-soft: rgba(167, 139, 250, 0.14);
+  --accent-glow: rgba(167, 139, 250, 0.26);
+  --warn: #f59e0b;
+  --warn-soft: rgba(245, 158, 11, 0.12);
+  --warn-border: rgba(245, 158, 11, 0.3);
   --success: #6dd58c;
-  --danger: #f87171;
+  --danger: #fb7185;
+  --danger-soft: rgba(251, 113, 133, 0.12);
   --sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
   --serif: 'Instrument Serif', 'Times New Roman', serif;
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
@@ -45,8 +51,8 @@ html { background: var(--bg); }
 body {
   font-family: var(--sans);
   background:
-    radial-gradient(70% 50% at 100% 0%, rgba(220,38,38,0.06), transparent 55%),
-    radial-gradient(60% 60% at 0% 100%, rgba(220,38,38,0.035), transparent 55%),
+    radial-gradient(70% 50% at 100% 0%, rgba(167,139,250,0.08), transparent 55%),
+    radial-gradient(50% 60% at 0% 100%, rgba(34,211,238,0.04), transparent 55%),
     var(--bg);
   background-attachment: fixed;
   color: var(--text);
@@ -67,7 +73,7 @@ body {
   padding: 12px 22px;
   border-bottom: 1px solid var(--border);
   background:
-    radial-gradient(110% 200% at 0% 0%, rgba(220,38,38,0.07), transparent 45%),
+    radial-gradient(110% 200% at 0% 0%, rgba(167,139,250,0.08), transparent 45%),
     var(--bg-elev);
   position: relative;
   z-index: 5;
@@ -75,22 +81,22 @@ body {
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand-icon {
   width: 32px; height: 32px;
-  background: linear-gradient(140deg, #ef4444 0%, #b91c1c 60%, #7f1d1d 100%);
+  background: linear-gradient(140deg, #c4b5fd 0%, #8b5cf6 55%, #5b21b6 100%);
   border-radius: 8px;
   position: relative;
   flex-shrink: 0;
   overflow: hidden;
   box-shadow:
-    0 0 0 1px rgba(220,38,38,0.4),
-    0 6px 16px rgba(220,38,38,0.28),
+    0 0 0 1px rgba(167,139,250,0.45),
+    0 6px 16px rgba(167,139,250,0.3),
     inset 0 1px 0 rgba(255,255,255,0.18);
   transition: transform 0.3s cubic-bezier(0.2,0.7,0.3,1), box-shadow 0.3s;
 }
 .brand:hover .brand-icon {
   transform: rotate(-3deg) scale(1.04);
   box-shadow:
-    0 0 0 1px rgba(220,38,38,0.55),
-    0 8px 24px rgba(220,38,38,0.4),
+    0 0 0 1px rgba(167,139,250,0.6),
+    0 8px 24px rgba(167,139,250,0.45),
     inset 0 1px 0 rgba(255,255,255,0.25);
 }
 .brand-icon svg {
@@ -424,14 +430,14 @@ button.secondary:hover { border-color: var(--border-2); background: var(--panel-
   text-align: center;
   cursor: pointer;
   background:
-    radial-gradient(60% 80% at 50% 50%, rgba(220,38,38,0.05) 0%, transparent 70%),
+    radial-gradient(60% 80% at 50% 50%, rgba(167,139,250,0.06) 0%, transparent 70%),
     var(--panel);
   transition: all 0.2s;
 }
 .dropzone:hover, .dropzone.drag {
   border-color: var(--accent);
   background:
-    radial-gradient(60% 80% at 50% 50%, rgba(220,38,38,0.12) 0%, transparent 70%),
+    radial-gradient(60% 80% at 50% 50%, rgba(167,139,250,0.14) 0%, transparent 70%),
     var(--panel);
 }
 .dz-icon {
@@ -474,10 +480,10 @@ button.secondary:hover { border-color: var(--border-2); background: var(--panel-
 .crop-area {
   position: relative;
   background:
-    radial-gradient(80% 60% at 50% 50%, rgba(220,38,38,0.06), transparent 70%),
+    radial-gradient(80% 60% at 50% 50%, rgba(167,139,250,0.07), transparent 70%),
     var(--bg);
   background-image:
-    radial-gradient(80% 60% at 50% 50%, rgba(220,38,38,0.06), transparent 70%),
+    radial-gradient(80% 60% at 50% 50%, rgba(167,139,250,0.07), transparent 70%),
     linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
   background-size: auto, 10px 10px, 10px 10px;
@@ -517,8 +523,8 @@ button.secondary:hover { border-color: var(--border-2); background: var(--panel-
 .crop-box .grid {
   position: absolute; inset: 0; pointer-events: none;
   background:
-    linear-gradient(to right, transparent calc(33.33% - 0.5px), rgba(220,38,38,0.35) calc(33.33% - 0.5px), rgba(220,38,38,0.35) calc(33.33% + 0.5px), transparent calc(33.33% + 0.5px), transparent calc(66.66% - 0.5px), rgba(220,38,38,0.35) calc(66.66% - 0.5px), rgba(220,38,38,0.35) calc(66.66% + 0.5px), transparent calc(66.66% + 0.5px)),
-    linear-gradient(to bottom, transparent calc(33.33% - 0.5px), rgba(220,38,38,0.35) calc(33.33% - 0.5px), rgba(220,38,38,0.35) calc(33.33% + 0.5px), transparent calc(33.33% + 0.5px), transparent calc(66.66% - 0.5px), rgba(220,38,38,0.35) calc(66.66% - 0.5px), rgba(220,38,38,0.35) calc(66.66% + 0.5px), transparent calc(66.66% + 0.5px));
+    linear-gradient(to right, transparent calc(33.33% - 0.5px), rgba(167,139,250,0.4) calc(33.33% - 0.5px), rgba(167,139,250,0.4) calc(33.33% + 0.5px), transparent calc(33.33% + 0.5px), transparent calc(66.66% - 0.5px), rgba(167,139,250,0.4) calc(66.66% - 0.5px), rgba(167,139,250,0.4) calc(66.66% + 0.5px), transparent calc(66.66% + 0.5px)),
+    linear-gradient(to bottom, transparent calc(33.33% - 0.5px), rgba(167,139,250,0.4) calc(33.33% - 0.5px), rgba(167,139,250,0.4) calc(33.33% + 0.5px), transparent calc(33.33% + 0.5px), transparent calc(66.66% - 0.5px), rgba(167,139,250,0.4) calc(66.66% - 0.5px), rgba(167,139,250,0.4) calc(66.66% + 0.5px), transparent calc(66.66% + 0.5px));
 }
 .crop-box .handle {
   position: absolute;
@@ -657,16 +663,16 @@ input[type="range"]::-moz-range-thumb {
   background: var(--text-4);
 }
 .status-dot.good { background: var(--success); box-shadow: 0 0 4px rgba(109,213,140,0.5); }
-.status-dot.warn { background: var(--accent); box-shadow: 0 0 4px rgba(220,38,38,0.5); }
+.status-dot.warn { background: var(--accent); box-shadow: 0 0 4px rgba(167,139,250,0.55); }
 .status-dot.bad { background: var(--danger); box-shadow: 0 0 4px rgba(248,113,113,0.5); }
 
 .auto-btn {
   background: var(--accent-soft);
-  border: 1px solid rgba(220,38,38,0.4);
+  border: 1px solid rgba(167,139,250,0.35);
   color: var(--accent);
-  padding: 8px 12px;
+  padding: 9px 12px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   border-radius: var(--radius);
   cursor: pointer;
   font-family: inherit;
@@ -674,7 +680,8 @@ input[type="range"]::-moz-range-thumb {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  transition: all 0.15s;
+  transition: all 0.18s;
+  letter-spacing: -0.005em;
 }
 .auto-btn:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
 .auto-btn:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -682,10 +689,10 @@ input[type="range"]::-moz-range-thumb {
 .source-warn {
   font-family: var(--mono);
   font-size: 11px;
-  color: var(--accent);
-  background: var(--accent-soft);
-  border: 1px solid rgba(220,38,38,0.28);
-  padding: 8px 10px;
+  color: var(--warn);
+  background: var(--warn-soft);
+  border: 1px solid var(--warn-border);
+  padding: 9px 11px;
   border-radius: var(--radius-sm);
   line-height: 1.4;
 }
@@ -709,7 +716,7 @@ button.download {
   box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,0.2);
 }
 button.download:hover {
-  box-shadow: 0 8px 24px rgba(220,38,38,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+  box-shadow: 0 8px 24px rgba(167,139,250,0.4), inset 0 1px 0 rgba(255,255,255,0.25);
   transform: translateY(-1px);
 }
 button.download:active { transform: translateY(0); }
@@ -743,7 +750,7 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
 .preview-tabs button.active {
   background: var(--accent-soft);
   color: var(--accent);
-  border-color: rgba(220,38,38,0.35);
+  border-color: rgba(167,139,250,0.4);
 }
 
 .preview-grid {
@@ -975,7 +982,7 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
   font-weight: 500;
   letter-spacing: 0;
   font-variant-numeric: tabular-nums;
-  border: 1px solid rgba(220,38,38,0.2);
+  border: 1px solid rgba(167,139,250,0.22);
   position: relative;
   top: -2px;
 }
@@ -1094,16 +1101,6 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
 
 <header class="header">
   <div class="brand">
-    <div class="brand-icon" aria-hidden="true">
-      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6.5" y="8" width="19" height="16" rx="2" fill="rgba(0,0,0,0.32)" stroke="rgba(255,255,255,0.7)" stroke-width="1.1"/>
-        <rect x="8.5" y="10" width="15" height="7" rx="1" fill="rgba(255,255,255,0.55)"/>
-        <circle cx="11.5" cy="12.6" r="1" fill="#7f1d1d"/>
-        <path d="M9 17 L12.5 13.8 L15.5 15.6 L19 12.5 L22.5 15.5 L23 17 Z" fill="#7f1d1d" opacity="0.65"/>
-        <rect x="8.5" y="18.5" width="11" height="1.4" rx="0.7" fill="rgba(255,255,255,0.85)"/>
-        <rect x="8.5" y="20.6" width="8" height="1.1" rx="0.55" fill="rgba(255,255,255,0.45)"/>
-      </svg>
-    </div>
     <div class="brand-text">
       <div class="brand-name">OpenGraph <span class="dim">Studio</span></div>
       <div class="brand-tag">
