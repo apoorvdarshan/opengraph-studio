@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Don't index the serverless proxy endpoint
+Disallow: /api/
+
+Sitemap: https://opengraph-studio.vercel.app/sitemap.xml
