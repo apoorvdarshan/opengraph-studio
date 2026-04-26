@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://opengraph-studio.vercel.app/">
-    <img src="https://opengraph-studio.vercel.app/og-image.jpg" alt="OpenGraph Studio — crop, preview, and export Open Graph share cards in your browser" width="100%">
+    <img src="https://opengraph-studio.vercel.app/favicon.svg" alt="OpenGraph Studio logo" width="96" height="96">
   </a>
 </p>
 
