@@ -23,10 +23,10 @@
   --text-2: #aaaaa3;
   --text-3: #74746d;
   --text-4: #4d4d49;
-  --accent: #f59e0b;
-  --accent-2: #fbbf24;
-  --accent-soft: rgba(245, 158, 11, 0.12);
-  --accent-glow: rgba(245, 158, 11, 0.18);
+  --accent: #dc2626;
+  --accent-2: #ef4444;
+  --accent-soft: rgba(220, 38, 38, 0.13);
+  --accent-glow: rgba(220, 38, 38, 0.22);
   --success: #6dd58c;
   --danger: #f87171;
   --sans: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -61,7 +61,7 @@ body {
   padding: 12px 22px;
   border-bottom: 1px solid var(--border);
   background:
-    radial-gradient(110% 200% at 0% 0%, rgba(245,158,11,0.06), transparent 45%),
+    radial-gradient(110% 200% at 0% 0%, rgba(220,38,38,0.07), transparent 45%),
     var(--bg-elev);
   position: relative;
   z-index: 5;
@@ -69,11 +69,11 @@ body {
 .brand { display: flex; align-items: center; gap: 11px; }
 .brand-icon {
   width: 24px; height: 24px;
-  background: linear-gradient(135deg, var(--accent), #d97706);
+  background: linear-gradient(135deg, var(--accent-2), #991b1b);
   border-radius: 6px;
   position: relative;
   flex-shrink: 0;
-  box-shadow: 0 0 0 1px rgba(245,158,11,0.3), 0 4px 12px rgba(245,158,11,0.18);
+  box-shadow: 0 0 0 1px rgba(220,38,38,0.35), 0 4px 12px rgba(220,38,38,0.22);
 }
 .brand-icon::after {
   content: '';
@@ -369,14 +369,14 @@ button.secondary:hover { border-color: var(--border-2); background: var(--panel-
   text-align: center;
   cursor: pointer;
   background:
-    radial-gradient(60% 80% at 50% 50%, rgba(245,158,11,0.04) 0%, transparent 70%),
+    radial-gradient(60% 80% at 50% 50%, rgba(220,38,38,0.05) 0%, transparent 70%),
     var(--panel);
   transition: all 0.2s;
 }
 .dropzone:hover, .dropzone.drag {
   border-color: var(--accent);
   background:
-    radial-gradient(60% 80% at 50% 50%, rgba(245,158,11,0.10) 0%, transparent 70%),
+    radial-gradient(60% 80% at 50% 50%, rgba(220,38,38,0.12) 0%, transparent 70%),
     var(--panel);
 }
 .dz-icon {
@@ -411,10 +411,10 @@ button.secondary:hover { border-color: var(--border-2); background: var(--panel-
 .crop-area {
   position: relative;
   background:
-    radial-gradient(80% 60% at 50% 50%, rgba(245,158,11,0.05), transparent 70%),
+    radial-gradient(80% 60% at 50% 50%, rgba(220,38,38,0.06), transparent 70%),
     var(--bg);
   background-image:
-    radial-gradient(80% 60% at 50% 50%, rgba(245,158,11,0.05), transparent 70%),
+    radial-gradient(80% 60% at 50% 50%, rgba(220,38,38,0.06), transparent 70%),
     linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
   background-size: auto, 10px 10px, 10px 10px;
@@ -454,8 +454,8 @@ button.secondary:hover { border-color: var(--border-2); background: var(--panel-
 .crop-box .grid {
   position: absolute; inset: 0; pointer-events: none;
   background:
-    linear-gradient(to right, transparent calc(33.33% - 0.5px), rgba(245,158,11,0.3) calc(33.33% - 0.5px), rgba(245,158,11,0.3) calc(33.33% + 0.5px), transparent calc(33.33% + 0.5px), transparent calc(66.66% - 0.5px), rgba(245,158,11,0.3) calc(66.66% - 0.5px), rgba(245,158,11,0.3) calc(66.66% + 0.5px), transparent calc(66.66% + 0.5px)),
-    linear-gradient(to bottom, transparent calc(33.33% - 0.5px), rgba(245,158,11,0.3) calc(33.33% - 0.5px), rgba(245,158,11,0.3) calc(33.33% + 0.5px), transparent calc(33.33% + 0.5px), transparent calc(66.66% - 0.5px), rgba(245,158,11,0.3) calc(66.66% - 0.5px), rgba(245,158,11,0.3) calc(66.66% + 0.5px), transparent calc(66.66% + 0.5px));
+    linear-gradient(to right, transparent calc(33.33% - 0.5px), rgba(220,38,38,0.35) calc(33.33% - 0.5px), rgba(220,38,38,0.35) calc(33.33% + 0.5px), transparent calc(33.33% + 0.5px), transparent calc(66.66% - 0.5px), rgba(220,38,38,0.35) calc(66.66% - 0.5px), rgba(220,38,38,0.35) calc(66.66% + 0.5px), transparent calc(66.66% + 0.5px)),
+    linear-gradient(to bottom, transparent calc(33.33% - 0.5px), rgba(220,38,38,0.35) calc(33.33% - 0.5px), rgba(220,38,38,0.35) calc(33.33% + 0.5px), transparent calc(33.33% + 0.5px), transparent calc(66.66% - 0.5px), rgba(220,38,38,0.35) calc(66.66% - 0.5px), rgba(220,38,38,0.35) calc(66.66% + 0.5px), transparent calc(66.66% + 0.5px));
 }
 .crop-box .handle {
   position: absolute;
@@ -594,12 +594,12 @@ input[type="range"]::-moz-range-thumb {
   background: var(--text-4);
 }
 .status-dot.good { background: var(--success); box-shadow: 0 0 4px rgba(109,213,140,0.5); }
-.status-dot.warn { background: var(--accent); box-shadow: 0 0 4px rgba(245,158,11,0.5); }
+.status-dot.warn { background: var(--accent); box-shadow: 0 0 4px rgba(220,38,38,0.5); }
 .status-dot.bad { background: var(--danger); box-shadow: 0 0 4px rgba(248,113,113,0.5); }
 
 .auto-btn {
   background: var(--accent-soft);
-  border: 1px solid rgba(245,158,11,0.4);
+  border: 1px solid rgba(220,38,38,0.4);
   color: var(--accent);
   padding: 8px 12px;
   font-size: 12px;
@@ -621,7 +621,7 @@ input[type="range"]::-moz-range-thumb {
   font-size: 11px;
   color: var(--accent);
   background: var(--accent-soft);
-  border: 1px solid rgba(245,158,11,0.25);
+  border: 1px solid rgba(220,38,38,0.28);
   padding: 8px 10px;
   border-radius: var(--radius-sm);
   line-height: 1.4;
@@ -646,7 +646,7 @@ button.download {
   box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,0.2);
 }
 button.download:hover {
-  box-shadow: 0 8px 24px rgba(245,158,11,0.3), inset 0 1px 0 rgba(255,255,255,0.25);
+  box-shadow: 0 8px 24px rgba(220,38,38,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
   transform: translateY(-1px);
 }
 button.download:active { transform: translateY(0); }
@@ -680,7 +680,7 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
 .preview-tabs button.active {
   background: var(--accent-soft);
   color: var(--accent);
-  border-color: rgba(245,158,11,0.3);
+  border-color: rgba(220,38,38,0.35);
 }
 
 .preview-grid {
