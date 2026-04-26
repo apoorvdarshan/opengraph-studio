@@ -1,6 +1,21 @@
-# OpenGraph Studio
+<p align="center">
+  <a href="https://opengraph-studio.vercel.app/">
+    <img src="https://opengraph-studio.vercel.app/og-image.jpg" alt="OpenGraph Studio — crop, preview, and export Open Graph share cards in your browser" width="100%">
+  </a>
+</p>
 
-**Live → [opengraph-studio.vercel.app](https://opengraph-studio.vercel.app/)**
+<h1 align="center">OpenGraph Studio</h1>
+
+<p align="center">
+  <strong>Live → <a href="https://opengraph-studio.vercel.app/">opengraph-studio.vercel.app</a></strong>
+</p>
+
+<p align="center">
+  <a href="https://github.com/apoorvdarshan/opengraph-studio/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/apoorvdarshan/opengraph-studio?style=flat&color=a78bfa"></a>
+  <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-a78bfa.svg?style=flat"></a>
+  <a href="https://x.com/apoorvdarshan"><img alt="Follow on X" src="https://img.shields.io/badge/X-%40apoorvdarshan-a78bfa?style=flat&logo=x&logoColor=white"></a>
+</p>
+
 
 A single-page workshop for designing, previewing, and exporting Open Graph share cards. Vanilla HTML/CSS/JS — no build step, no framework, no account. Runs entirely in your browser.
 
