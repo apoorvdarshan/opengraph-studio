@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>OpenGraph Studio — Crop, preview & export OG share cards</title>
-<meta name="description" content="Crop, compress and preview Open Graph images for Twitter, Facebook, LinkedIn, WhatsApp, Slack and Discord. All in your browser." />
+<title>OpenGraph Studio — Free OG Image Generator, Cropper &amp; Social Preview Tool</title>
+<meta name="description" content="Free Open Graph image generator and editor. Crop to 1200×630, compress JPEG/PNG/WEBP, and live-preview share cards for Twitter / X, Facebook, LinkedIn, WhatsApp, Slack and Discord. Generates og: and twitter: meta tags. No signup, no upload, runs in your browser." />
+<meta name="keywords" content="open graph image generator, og image generator, og image creator, og image editor, og image cropper, og image compressor, twitter card generator, summary_large_image, social media preview tool, share card preview, facebook share preview, linkedin preview generator, whatsapp link preview, discord embed preview, slack unfurl preview, og image size 1200x630, og:image meta tag, twitter:card meta tag, free og image tool, online og image maker, opengraph studio, opengraph generator, social card maker, link preview generator, meta tag generator, free seo tool, vanilla javascript image cropper" />
+<meta name="author" content="Apoorv Darshan" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<meta name="theme-color" content="#0c0d12" />
 <link rel="canonical" href="https://opengraph-studio.vercel.app/" />
 
 <!-- Open Graph -->
@@ -12,8 +16,8 @@
 <meta property="og:site_name" content="OpenGraph Studio" />
 <meta property="og:locale" content="en_US" />
 <meta property="og:url" content="https://opengraph-studio.vercel.app/" />
-<meta property="og:title" content="OpenGraph Studio — Crop, preview & export OG share cards" />
-<meta property="og:description" content="A single-page workshop for designing, previewing, and exporting Open Graph share cards. Six platforms, live previews, vanilla HTML/CSS/JS." />
+<meta property="og:title" content="OpenGraph Studio — Free OG Image Generator &amp; Social Card Preview Tool" />
+<meta property="og:description" content="Crop to 1200×630, compress JPEG/PNG/WEBP, and live-preview Open Graph share cards on Twitter / X, Facebook, LinkedIn, WhatsApp, Slack and Discord. Generates a complete set of og: and twitter: meta tags. Free, no signup." />
 <meta property="og:image" content="https://opengraph-studio.vercel.app/og-image.jpg" />
 <meta property="og:image:secure_url" content="https://opengraph-studio.vercel.app/og-image.jpg" />
 <meta property="og:image:type" content="image/jpeg" />
@@ -26,10 +30,114 @@
 <meta name="twitter:site" content="@apoorvdarshan" />
 <meta name="twitter:creator" content="@apoorvdarshan" />
 <meta name="twitter:url" content="https://opengraph-studio.vercel.app/" />
-<meta name="twitter:title" content="OpenGraph Studio — Crop, preview & export OG share cards" />
-<meta name="twitter:description" content="A single-page workshop for designing, previewing, and exporting Open Graph share cards. Six platforms, live previews, vanilla HTML/CSS/JS." />
+<meta name="twitter:title" content="OpenGraph Studio — Free OG Image Generator &amp; Social Card Preview Tool" />
+<meta name="twitter:description" content="Crop to 1200×630, compress JPEG/PNG/WEBP, and live-preview Open Graph share cards on Twitter / X, Facebook, LinkedIn, WhatsApp, Slack and Discord. Generates a complete set of og: and twitter: meta tags. Free, no signup." />
 <meta name="twitter:image" content="https://opengraph-studio.vercel.app/og-image.jpg" />
 <meta name="twitter:image:alt" content="OpenGraph Studio — crop, preview, and export share cards in your browser." />
+
+<!-- Structured data: WebApplication + FAQPage for rich snippets -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://opengraph-studio.vercel.app/#app",
+      "name": "OpenGraph Studio",
+      "alternateName": ["OG Studio", "OpenGraph Image Studio"],
+      "url": "https://opengraph-studio.vercel.app/",
+      "description": "Free Open Graph image generator and social card preview tool. Crop, compress, and preview og:image assets at the standard 1200×630 resolution. Live previews for Twitter / X, Facebook, LinkedIn, WhatsApp, Slack, and Discord with auto-generated og: and twitter: meta tags.",
+      "applicationCategory": "DesignApplication",
+      "applicationSubCategory": "Image Editor",
+      "operatingSystem": "Web Browser",
+      "browserRequirements": "Requires JavaScript and a modern browser.",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Person",
+        "name": "Apoorv Darshan",
+        "url": "https://x.com/apoorvdarshan",
+        "sameAs": [
+          "https://github.com/apoorvdarshan",
+          "https://x.com/apoorvdarshan"
+        ]
+      },
+      "image": "https://opengraph-studio.vercel.app/og-image.jpg",
+      "screenshot": "https://opengraph-studio.vercel.app/og-image.jpg",
+      "softwareVersion": "1.0",
+      "license": "https://opensource.org/licenses/MIT",
+      "featureList": [
+        "Crop image to the standard 1200×630 Open Graph aspect ratio (1.91:1)",
+        "Compress JPEG, PNG, or WEBP with a live quality slider",
+        "Auto-compress to under 200 KB with one click",
+        "Drag-and-drop, click, or paste (Ctrl/Cmd+V) image upload",
+        "Fetch existing site's og:image by URL",
+        "Live previews for Twitter / X, Facebook, LinkedIn, WhatsApp, Slack, Discord",
+        "Per-platform character limit warnings for og:title and og:description",
+        "Generates complete set of og: and twitter:card meta tags",
+        "100% client-side image processing — no upload required"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is an Open Graph (OG) image?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An Open Graph image is the preview image that appears when your website link is shared on social media platforms like Twitter / X, Facebook, LinkedIn, WhatsApp, Slack, and Discord. It's defined in your page's HTML <head> with a <meta property=\"og:image\" content=\"...\"> tag. The recommended size is 1200×630 pixels (a 1.91:1 aspect ratio) and the file should ideally be under 200 KB."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the recommended size for an OG image?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The recommended Open Graph image size is 1200×630 pixels (1.91:1 aspect ratio). This is the standard supported by Facebook, LinkedIn, WhatsApp, Slack, Discord, and Twitter's summary_large_image card. Keep important content within a 1080×566 safe zone (roughly a 60-pixel margin on each side) so nothing important gets cropped."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's the maximum length for og:title and og:description?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Recommended title length is 60 characters or fewer to fit on every platform. Hard caps: WhatsApp around 65 chars, Twitter and LinkedIn 70, Slack 75, Facebook 100. For description, target 130–160 characters; WhatsApp truncates around 175 and Twitter around 200. Anything longer is silently truncated by the platform with an ellipsis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How big should an OG image file be?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Aim for under 200 KB for the best loading performance across all platforms. Up to 500 KB is acceptable. Files over 1 MB risk being downsampled or rejected by some platforms (Facebook in particular). OpenGraph Studio includes a one-click auto-compress button that finds the highest JPEG or WEBP quality that fits under 200 KB."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need separate Twitter Card and Open Graph tags?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Twitter falls back to og: tags if no twitter: equivalent is present, so technically no. But explicit twitter:card, twitter:title, twitter:description, and twitter:image tags give you precise control over how your link appears on Twitter / X. OpenGraph Studio outputs both sets so you don't have to choose."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is OpenGraph Studio free? Do I need an account?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, OpenGraph Studio is completely free and open-source under the MIT license. There is no account, no signup, and no upload — all image processing happens locally in your browser using the Canvas API. The hosted version uses privacy-friendly Vercel Web Analytics with no cookies and no IP storage."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1079,6 +1187,133 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
 ::-webkit-scrollbar-thumb { background: var(--border-2); border: 2px solid transparent; background-clip: padding-box; border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-3); background-clip: padding-box; border: 2px solid transparent; }
 
+/* ===== About + FAQ (SEO content) ===== */
+.about {
+  margin-top: 36px;
+  padding: 28px 28px 24px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.about h2 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: 12px;
+  line-height: 1;
+}
+.about h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 22px;
+  margin-bottom: 10px;
+  letter-spacing: -0.005em;
+}
+.about p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.65;
+  margin-bottom: 10px;
+}
+.about p strong { color: var(--text); font-weight: 600; }
+.about p code, .about li code {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.about ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 6px 16px;
+}
+.about ul li {
+  font-size: 13px;
+  color: var(--text-2);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.55;
+}
+.about ul li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 9px;
+  width: 5px; height: 5px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+.about table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 6px 0 14px;
+  font-size: 12.5px;
+}
+.about table th, .about table td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-2);
+  font-weight: 400;
+}
+.about table th {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom-color: var(--border-2);
+}
+.about table td:first-child { color: var(--text); font-weight: 500; }
+.about table td.mono, .about table th.mono {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+}
+.about details {
+  border-top: 1px solid var(--border);
+  padding: 12px 0;
+}
+.about details:last-of-type { border-bottom: 1px solid var(--border); }
+.about details summary {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.005em;
+}
+.about details summary::-webkit-details-marker { display: none; }
+.about details summary::before {
+  content: '+';
+  font-family: var(--mono);
+  font-size: 16px;
+  color: var(--accent);
+  width: 12px;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.about details[open] summary::before { content: '−'; }
+.about details p {
+  margin-top: 10px;
+  margin-left: 22px;
+  margin-bottom: 0;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
 /* ===== Page footer ===== */
 .page-footer {
   margin-top: 36px;
@@ -1203,7 +1438,7 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
 <header class="header">
   <div class="brand">
     <div class="brand-text">
-      <div class="brand-name">OpenGraph <span class="dim">Studio</span></div>
+      <h1 class="brand-name">OpenGraph <span class="dim">Studio</span></h1>
       <div class="brand-tag">
         <span>crop</span><span class="sep">·</span><span>preview</span><span class="sep">·</span><span>export</span><span class="sep">·</span><span class="dim-spec">1200×630</span>
       </div>
@@ -1506,6 +1741,71 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
       </div>
       <pre id="metaOutput"></pre>
     </div>
+
+    <section class="about" id="about" aria-labelledby="about-h">
+      <h2 id="about-h">About OpenGraph Studio</h2>
+      <p><strong>OpenGraph Studio</strong> is a free, open-source <strong>Open Graph image generator</strong> and <strong>social card preview tool</strong>. Design, crop, compress, and preview <code>og:image</code> assets at the standard <strong>1200 × 630</strong> resolution and see exactly how your link will look when shared on <strong>Twitter / X, Facebook, LinkedIn, WhatsApp, Slack, and Discord</strong> — all in your browser, with no signup, no upload, and no server-side processing of your images.</p>
+      <p>Use it to crop a photo to the correct OG aspect ratio, compress JPEG, PNG, or WEBP exports under 200 KB, and copy a complete set of <code>og:</code> and <code>twitter:</code> meta tags ready to paste into your site's <code>&lt;head&gt;</code>.</p>
+
+      <h3>Recommended Open Graph image sizes &amp; specs</h3>
+      <table>
+        <thead>
+          <tr><th>Spec</th><th>Recommended</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Dimensions</td><td class="mono">1200 × 630 px</td><td>Standard 1.91:1 aspect for all major platforms</td></tr>
+          <tr><td>Safe zone</td><td class="mono">1080 × 566 px</td><td>~60 px margin so nothing important gets cropped</td></tr>
+          <tr><td>File size</td><td class="mono">≤ 200 KB</td><td>Up to 500 KB acceptable; over 1 MB risks rejection</td></tr>
+          <tr><td>Format</td><td class="mono">JPEG / PNG / WEBP</td><td>JPEG is the safest choice; WEBP gives smaller files</td></tr>
+          <tr><td>Title</td><td class="mono">≤ 60 chars</td><td>Hard caps: WA 65 · TW/LI 70 · Slack 75 · FB 100</td></tr>
+          <tr><td>Description</td><td class="mono">130–160 chars</td><td>WhatsApp truncates at ~175, Twitter at 200</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Features</h3>
+      <ul>
+        <li>Interactive 1200×630 crop tool with live dimension readout</li>
+        <li>Quality slider for JPEG, PNG &amp; WEBP export</li>
+        <li>One-click auto-compress to under 200 KB</li>
+        <li>Drag-and-drop, click, or paste image upload</li>
+        <li>Fetch existing og:image from any URL via serverless edge proxy</li>
+        <li>Per-platform character truncation in live previews</li>
+        <li>Generates 17+ <code>og:</code> and <code>twitter:</code> meta tags</li>
+        <li>Source-dimension warning if image is below recommended size</li>
+        <li>Copy meta tags to clipboard with one click</li>
+        <li>100% client-side image processing — your images never leave your browser</li>
+      </ul>
+
+      <h3>Frequently asked questions</h3>
+      <details>
+        <summary>What is an Open Graph (OG) image?</summary>
+        <p>An <strong>OG image</strong> is the preview image that appears when your website link is shared on social media — Twitter / X, Facebook, LinkedIn, WhatsApp, Slack, Discord. It's defined in your page's HTML <code>&lt;head&gt;</code> with a <code>&lt;meta property="og:image" content="…"&gt;</code> tag. The recommended size is <strong>1200×630 pixels</strong> (a 1.91:1 aspect ratio) and the file should ideally be under 200 KB.</p>
+      </details>
+      <details>
+        <summary>What is the recommended OG image size?</summary>
+        <p>The recommended Open Graph image size is <strong>1200 × 630 pixels</strong> (1.91:1 aspect). This is the standard supported by Facebook, LinkedIn, WhatsApp, Slack, Discord, and Twitter's <code>summary_large_image</code> card. Keep important content within a <strong>1080 × 566 safe zone</strong> (roughly a 60-pixel margin) so nothing important gets cropped on smaller previews.</p>
+      </details>
+      <details>
+        <summary>What's the maximum length for og:title and og:description?</summary>
+        <p>Aim for <strong>≤ 60 characters</strong> on the title and <strong>130–160 characters</strong> on the description for clean rendering on every platform. Hard caps for title: WhatsApp ~65, Twitter / LinkedIn 70, Slack 75, Facebook 100. For description, WhatsApp truncates around 175 and Twitter around 200 characters. OpenGraph Studio shows live truncation in each preview card so you can see exactly what will appear.</p>
+      </details>
+      <details>
+        <summary>How big should the OG image file be?</summary>
+        <p>Aim for <strong>under 200 KB</strong> for best loading performance. Up to 500 KB is acceptable. Over 1 MB risks being downsampled or rejected by some platforms (Facebook in particular). The auto-compress button finds the highest JPEG or WEBP quality that fits under the 200 KB target via binary search.</p>
+      </details>
+      <details>
+        <summary>Do I need separate Twitter Card and Open Graph tags?</summary>
+        <p>Twitter falls back to <code>og:</code> tags if no <code>twitter:</code> equivalent is present, so technically no — but explicit <code>twitter:card</code>, <code>twitter:title</code>, <code>twitter:description</code>, and <code>twitter:image</code> tags give you precise control over how your link appears on Twitter / X. OpenGraph Studio outputs both sets.</p>
+      </details>
+      <details>
+        <summary>Is OpenGraph Studio free? Do I need an account?</summary>
+        <p>Yes — completely <strong>free and open-source</strong> under the MIT license. No account, no signup, no upload. All image processing happens locally in your browser using the Canvas API. The hosted version uses privacy-friendly Vercel Web Analytics (no cookies, no IP storage, GDPR-compliant). <a href="https://github.com/apoorvdarshan/opengraph-studio" target="_blank" rel="noopener">Source on GitHub</a>.</p>
+      </details>
+      <details>
+        <summary>Does it work for self-hosted blogs, Next.js, Astro, Hugo, etc.?</summary>
+        <p>Yes — the generated meta tags are framework-agnostic standard HTML. Paste them into your page's <code>&lt;head&gt;</code> in <strong>Next.js</strong> (App Router metadata or layout), <strong>Astro</strong> (slot in your base layout), <strong>Hugo</strong> (partial template), <strong>Jekyll</strong>, <strong>WordPress</strong>, or any plain static HTML site. Works with React, Vue, Svelte, Solid — the tags are just HTML.</p>
+      </details>
+    </section>
 
     <footer class="page-footer">
       <div class="footer-meta">
