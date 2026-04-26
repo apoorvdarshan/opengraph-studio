@@ -1,6 +1,8 @@
 # OpenGraph Studio
 
-A single-page workshop for designing, previewing, and exporting Open Graph share cards. Vanilla HTML/CSS/JS — no build step, no framework, no tracking. Runs entirely in your browser.
+**Live → [opengraph-studio.vercel.app](https://opengraph-studio.vercel.app/)**
+
+A single-page workshop for designing, previewing, and exporting Open Graph share cards. Vanilla HTML/CSS/JS — no build step, no framework, no account. Runs entirely in your browser.
 
 > Crop · Compress · Preview · Export — pixel-perfect 1200×630.
 
@@ -28,12 +30,18 @@ A single-page workshop for designing, previewing, and exporting Open Graph share
 
 ## Live demo
 
-Open `index.html` directly in any modern browser, or serve it locally:
+**[opengraph-studio.vercel.app](https://opengraph-studio.vercel.app/)** — hosted on Vercel.
+
+Or run it locally — no install required:
 
 ```bash
+git clone https://github.com/apoorvdarshan/opengraph-studio
+cd opengraph-studio
 python3 -m http.server 3000
 # then open http://localhost:3000
 ```
+
+You can also just open `index.html` directly in any modern browser.
 
 ## Project structure
 
@@ -69,10 +77,15 @@ Everything lives in `index.html`. There is no build, no `node_modules`, no toolc
 
 Drop `index.html` on any static host:
 
-- **GitHub Pages** — Settings → Pages → deploy from `main`
-- **Vercel / Netlify / Cloudflare Pages** — drag-and-drop the file, or connect the repo
+- **Vercel** — connect the repo (this is what [opengraph-studio.vercel.app](https://opengraph-studio.vercel.app/) uses); Vercel Web Analytics works out of the box via the script in the page.
+- **GitHub Pages** — Settings → Pages → deploy from `main`. The Vercel Analytics script will silently 404; remove it if you don't want the console line.
+- **Netlify / Cloudflare Pages** — drag-and-drop the file, or connect the repo.
 
 No server, no API, no env vars required.
+
+## Privacy
+
+The hosted site at [opengraph-studio.vercel.app](https://opengraph-studio.vercel.app/) uses [Vercel Web Analytics](https://vercel.com/docs/analytics) — privacy-friendly, no cookies, no IP storage, GDPR-compliant. All image processing happens locally in your browser; uploaded images and pasted URLs never leave your device.
 
 ## Roadmap
 
