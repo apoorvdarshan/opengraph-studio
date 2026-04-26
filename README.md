@@ -48,6 +48,8 @@ You can also just open `index.html` directly in any modern browser.
 ```
 opengraph-studio/
 ├── index.html        # the entire app (HTML + CSS + JS)
+├── api/
+│   └── fetch.js      # Vercel Edge function: server-side CORS proxy
 ├── LICENSE           # MIT
 ├── README.md
 ├── CONTRIBUTING.md
@@ -55,14 +57,14 @@ opengraph-studio/
     └── FUNDING.yml
 ```
 
-Everything lives in `index.html`. There is no build, no `node_modules`, no toolchain.
+The whole app is in `index.html` — no build, no `node_modules`, no toolchain. The single `api/fetch.js` is a Vercel Edge function that handles the URL-fetch feature server-side.
 
 ## Tech
 
 - **Vanilla HTML, CSS, and JavaScript** — no framework, no bundler, no CDN libraries (except Google Fonts for typography).
 - **Manrope** for UI, **Instrument Serif** for display moments, **JetBrains Mono** for code/dimensions — all from Google Fonts.
 - Image processing via the **Canvas API** (`drawImage` + `toBlob`).
-- URL-fetch path uses [corsproxy.io](https://corsproxy.io) to bypass CORS when reading remote pages and images.
+- **URL-fetch backend**: Vercel Edge function at `/api/fetch?url=...`. Validates the URL, blocks SSRF-prone hosts (localhost, link-local, internal metadata endpoints), 10s timeout, browser-like User-Agent, edge-cached for 5 minutes. Client falls back to public CORS proxies (allorigins, corsproxy.io, codetabs) if the edge function isn't reachable — useful for local development.
 
 ## Recommended values (encoded in the tool)
 

@@ -1515,13 +1515,14 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
   'use strict';
 
   const ASPECT = 1200 / 630;
-  // Multiple proxy fallbacks — different free CORS proxies have different origin
-  // policies and uptime. We try them in order until one succeeds.
+  // Primary: our own Vercel Edge function at /api/fetch — no rate limits, no
+  // origin restrictions. Falls back to third-party CORS proxies for local dev
+  // (where /api/fetch doesn't exist) or if our function is ever down.
   const PROXIES = [
+    (u) => '/api/fetch?url=' + encodeURIComponent(u),
     (u) => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
     (u) => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
-    (u) => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u),
-    (u) => 'https://cors.eu.org/' + u
+    (u) => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u)
   ];
 
   async function proxyFetch(url, timeoutMs = 8000) {
