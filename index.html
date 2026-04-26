@@ -7,7 +7,7 @@
 <meta name="description" content="Crop, compress and preview Open Graph images for Twitter, Facebook, LinkedIn, WhatsApp, Slack and Discord. All in your browser." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -29,8 +29,9 @@
   --accent-glow: rgba(220, 38, 38, 0.22);
   --success: #6dd58c;
   --danger: #f87171;
-  --sans: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
-  --mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
+  --sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  --serif: 'Instrument Serif', 'Times New Roman', serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
   --radius: 7px;
   --radius-sm: 5px;
   --radius-lg: 10px;
@@ -40,15 +41,20 @@
 }
 
 html, body { height: 100%; }
+html { background: var(--bg); }
 body {
   font-family: var(--sans);
-  background: var(--bg);
+  background:
+    radial-gradient(70% 50% at 100% 0%, rgba(220,38,38,0.06), transparent 55%),
+    radial-gradient(60% 60% at 0% 100%, rgba(220,38,38,0.035), transparent 55%),
+    var(--bg);
+  background-attachment: fixed;
   color: var(--text);
   font-size: 13.5px;
-  line-height: 1.5;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-feature-settings: 'cv11', 'ss01';
+  letter-spacing: -0.005em;
 }
 
 ::selection { background: var(--accent-soft); color: var(--text); }
@@ -101,19 +107,28 @@ body {
   background: radial-gradient(120% 60% at 50% 0%, rgba(255,255,255,0.22), transparent 60%);
   pointer-events: none;
 }
-.brand-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.brand-text { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 .brand-name {
-  font-size: 14.5px;
-  font-weight: 600;
-  letter-spacing: -0.018em;
-  line-height: 1;
+  font-family: var(--serif);
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  color: var(--text);
   display: inline-flex;
   align-items: baseline;
-  gap: 5px;
+  gap: 7px;
 }
 .brand-name .dim {
-  font-weight: 400;
-  color: var(--text-3);
+  font-family: var(--sans);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13.5px;
+  color: var(--text-2);
+  letter-spacing: -0.01em;
+  position: relative;
+  top: -1px;
 }
 .brand-tag {
   font-family: var(--mono);
@@ -123,10 +138,10 @@ body {
   letter-spacing: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
 }
 .brand-tag .sep { color: var(--text-4); }
-.brand-tag .dim-spec { color: var(--accent); font-variant-numeric: tabular-nums; }
+.brand-tag .dim-spec { color: var(--accent); font-variant-numeric: tabular-nums; font-weight: 500; }
 .header-right { display: flex; align-items: center; gap: 8px; }
 .kbd-hint {
   display: inline-flex;
@@ -192,25 +207,31 @@ kbd {
 }
 
 /* ===== Section headers ===== */
-.section { margin-bottom: 26px; }
+.section { margin-bottom: 30px; }
 .section-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 14px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  margin-bottom: 16px;
+  padding-left: 11px;
+  border-left: 2px solid var(--accent);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  letter-spacing: -0.005em;
+  line-height: 1.2;
+  min-height: 14px;
 }
 .section-title .meta {
   font-family: var(--mono);
-  font-size: 10.5px;
-  font-weight: 400;
+  font-size: 10px;
+  font-weight: 500;
   color: var(--text-3);
-  letter-spacing: 0;
+  letter-spacing: 0.03em;
   font-variant-numeric: tabular-nums;
+  text-transform: none;
 }
 
 /* ===== Tabs ===== */
@@ -338,9 +359,11 @@ button.secondary:hover { border-color: var(--border-2); background: var(--panel-
 }
 .field-label {
   display: block;
-  font-size: 11px;
-  color: var(--text-2);
-  font-weight: 500;
+  font-size: 10.5px;
+  color: var(--text-3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 .field-count {
   font-family: var(--mono);
@@ -428,7 +451,15 @@ button.secondary:hover { border-color: var(--border-2); background: var(--panel-
   color: var(--accent);
   background: var(--accent-soft);
 }
-.dz-text { font-size: 13px; color: var(--text); font-weight: 500; letter-spacing: -0.005em; }
+.dz-text {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--text);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+}
 .dz-hint {
   font-family: var(--mono);
   font-size: 10.5px;
@@ -747,10 +778,10 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
   border-bottom: 1px solid var(--border);
 }
 .pc-name {
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
   color: var(--text);
-  letter-spacing: -0.005em;
+  letter-spacing: -0.01em;
 }
 .pc-dim {
   font-family: var(--mono);
@@ -923,24 +954,30 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
   gap: 12px;
 }
 .meta-output-title {
-  font-size: 12px;
-  font-weight: 600;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 400;
   color: var(--text);
-  letter-spacing: -0.005em;
+  letter-spacing: -0.01em;
+  line-height: 1;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 .meta-output-title .tag-badge {
   font-family: var(--mono);
   font-size: 10px;
   background: var(--accent-soft);
   color: var(--accent);
-  padding: 2px 6px;
+  padding: 3px 7px;
   border-radius: 4px;
   font-weight: 500;
   letter-spacing: 0;
   font-variant-numeric: tabular-nums;
+  border: 1px solid rgba(220,38,38,0.2);
+  position: relative;
+  top: -2px;
 }
 .meta-output-sub {
   font-family: var(--mono);
