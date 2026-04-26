@@ -1515,7 +1515,28 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
   'use strict';
 
   const ASPECT = 1200 / 630;
-  const PROXY = (u) => 'https://corsproxy.io/?url=' + encodeURIComponent(u);
+  // Multiple proxy fallbacks — different free CORS proxies have different origin
+  // policies and uptime. We try them in order until one succeeds.
+  const PROXIES = [
+    (u) => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+    (u) => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
+    (u) => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u),
+    (u) => 'https://cors.eu.org/' + u
+  ];
+
+  async function proxyFetch(url) {
+    let lastErr;
+    for (const build of PROXIES) {
+      try {
+        const res = await fetch(build(url));
+        if (res.ok) return res;
+        lastErr = new Error('HTTP ' + res.status);
+      } catch (e) {
+        lastErr = e;
+      }
+    }
+    throw lastErr || new Error('All proxies unreachable');
+  }
 
   // Per-platform recommended limits (where omitted, platform doesn't truncate or doesn't show field)
   const LIMITS = {
@@ -1618,8 +1639,7 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
     setUrlStatus('Fetching page…', 'loading');
 
     try {
-      const res = await fetch(PROXY(url));
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const res = await proxyFetch(url);
       const html = await res.text();
       const doc = new DOMParser().parseFromString(html, 'text/html');
       const m = (sel) => doc.querySelector(sel)?.getAttribute('content') || '';
@@ -1674,8 +1694,7 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
   }
 
   async function loadImageFromUrl(imgUrl) {
-    const res = await fetch(PROXY(imgUrl));
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const res = await proxyFetch(imgUrl);
     const blob = await res.blob();
     if (!/^image\//i.test(blob.type)) throw new Error('not an image');
     await loadImageFromBlob(blob);
