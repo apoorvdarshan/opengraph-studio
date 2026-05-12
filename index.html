@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>OpenGraph Studio — Free OG Image Generator, Cropper &amp; Social Preview Tool</title>
-<meta name="description" content="Free Open Graph image generator and editor. Crop to 1200×630, compress JPEG/PNG/WEBP, and live-preview share cards for Twitter / X, Facebook, LinkedIn, WhatsApp, Slack and Discord. Generates og: and twitter: meta tags. No signup, no upload, runs in your browser." />
-<meta name="keywords" content="open graph image generator, og image generator, og image creator, og image editor, og image cropper, og image compressor, twitter card generator, summary_large_image, social media preview tool, share card preview, facebook share preview, linkedin preview generator, whatsapp link preview, discord embed preview, slack unfurl preview, og image size 1200x630, og:image meta tag, twitter:card meta tag, free og image tool, online og image maker, opengraph studio, opengraph generator, social card maker, link preview generator, meta tag generator, free seo tool, vanilla javascript image cropper" />
+<title>Open Graph Image Generator - Free OG Image Cropper &amp; Preview Tool</title>
+<meta name="description" content="Free Open Graph image generator for 1200×630 OG images. Crop, compress and preview social cards, then copy OG and Twitter meta tags. No signup." />
+<meta name="keywords" content="open graph image generator, open graph generator, opengraph generator, og image generator, og image creator, og image editor, og image cropper, og image compressor, twitter card generator, summary_large_image, social media preview tool, share card preview, facebook share preview, linkedin preview generator, whatsapp link preview, discord embed preview, slack unfurl preview, og image size 1200x630, og:image meta tag, twitter:card meta tag, free og image tool, online og image maker, opengraph studio, social card maker, link preview generator, meta tag generator, free seo tool, vanilla javascript image cropper" />
 <meta name="author" content="Apoorv Darshan" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
 <meta name="theme-color" content="#0c0d12" />
@@ -22,8 +22,8 @@
 <meta property="og:site_name" content="OpenGraph Studio" />
 <meta property="og:locale" content="en_US" />
 <meta property="og:url" content="https://www.opengraph.website/" />
-<meta property="og:title" content="OpenGraph Studio — Free OG Image Generator &amp; Social Card Preview Tool" />
-<meta property="og:description" content="Crop to 1200×630, compress JPEG/PNG/WEBP, and live-preview Open Graph share cards on Twitter / X, Facebook, LinkedIn, WhatsApp, Slack and Discord. Generates a complete set of og: and twitter: meta tags. Free, no signup." />
+<meta property="og:title" content="Open Graph Image Generator - OpenGraph Studio" />
+<meta property="og:description" content="Create 1200×630 OG images, crop and compress uploads, preview social cards, and copy Open Graph plus Twitter meta tags for free." />
 <meta property="og:image" content="https://www.opengraph.website/og-image.jpg" />
 <meta property="og:image:secure_url" content="https://www.opengraph.website/og-image.jpg" />
 <meta property="og:image:type" content="image/jpeg" />
@@ -36,8 +36,8 @@
 <meta name="twitter:site" content="@apoorvdarshan" />
 <meta name="twitter:creator" content="@apoorvdarshan" />
 <meta name="twitter:url" content="https://www.opengraph.website/" />
-<meta name="twitter:title" content="OpenGraph Studio — Free OG Image Generator &amp; Social Card Preview Tool" />
-<meta name="twitter:description" content="Crop to 1200×630, compress JPEG/PNG/WEBP, and live-preview Open Graph share cards on Twitter / X, Facebook, LinkedIn, WhatsApp, Slack and Discord. Generates a complete set of og: and twitter: meta tags. Free, no signup." />
+<meta name="twitter:title" content="Open Graph Image Generator - OpenGraph Studio" />
+<meta name="twitter:description" content="Create 1200×630 OG images, crop and compress uploads, preview social cards, and copy Open Graph plus Twitter meta tags for free." />
 <meta name="twitter:image" content="https://www.opengraph.website/og-image.jpg" />
 <meta name="twitter:image:alt" content="OpenGraph Studio — crop, preview, and export share cards in your browser." />
 
@@ -47,10 +47,38 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.opengraph.website/#website",
+      "name": "OpenGraph Studio",
+      "alternateName": [
+        "Open Graph Image Generator",
+        "OG Image Generator",
+        "OpenGraph Generator"
+      ],
+      "url": "https://www.opengraph.website/",
+      "inLanguage": "en-US",
+      "description": "Free Open Graph image generator and social card preview tool for creating 1200×630 OG images and metadata."
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.opengraph.website/#webpage",
+      "url": "https://www.opengraph.website/",
+      "name": "Open Graph Image Generator - Free OG Image Cropper & Preview Tool",
+      "isPartOf": { "@id": "https://www.opengraph.website/#website" },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://www.opengraph.website/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "en-US",
+      "description": "Free Open Graph image generator for 1200×630 OG images. Crop, compress and preview social cards, then copy OG and Twitter meta tags."
+    },
+    {
       "@type": "WebApplication",
       "@id": "https://www.opengraph.website/#app",
       "name": "OpenGraph Studio",
-      "alternateName": ["OG Studio", "OpenGraph Image Studio"],
+      "alternateName": ["OG Studio", "OpenGraph Image Studio", "Open Graph Image Generator", "OG Image Generator", "OpenGraph Generator"],
       "url": "https://www.opengraph.website/",
       "description": "Free Open Graph image generator and social card preview tool. Crop, compress, and preview og:image assets at the standard 1200×630 resolution. Live previews for Twitter / X, Facebook, LinkedIn, WhatsApp, Slack, and Discord with auto-generated og: and twitter: meta tags.",
       "applicationCategory": "DesignApplication",
@@ -74,6 +102,8 @@
       },
       "image": "https://www.opengraph.website/og-image.jpg",
       "screenshot": "https://www.opengraph.website/og-image.jpg",
+      "mainEntityOfPage": { "@id": "https://www.opengraph.website/#webpage" },
+      "keywords": "open graph image generator, opengraph generator, og image generator, social card preview tool, twitter card generator, og:image cropper",
       "softwareVersion": "1.0",
       "license": "https://opensource.org/licenses/MIT",
       "featureList": [
@@ -91,6 +121,14 @@
     {
       "@type": "FAQPage",
       "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I use this Open Graph image generator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Paste a URL to fetch existing Open Graph metadata, or upload an image. Crop it to 1200×630, choose JPEG, PNG, or WEBP, compress it if needed, preview the card across social platforms, and copy the generated og: and twitter: meta tags."
+          }
+        },
         {
           "@type": "Question",
           "name": "What is an Open Graph (OG) image?",
@@ -1749,9 +1787,9 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
     </div>
 
     <section class="about" id="about" aria-labelledby="about-h">
-      <h2 id="about-h">About OpenGraph Studio</h2>
-      <p><strong>OpenGraph Studio</strong> is a free, open-source <strong>Open Graph image generator</strong> and <strong>social card preview tool</strong>. Design, crop, compress, and preview <code>og:image</code> assets at the standard <strong>1200 × 630</strong> resolution and see exactly how your link will look when shared on <strong>Twitter / X, Facebook, LinkedIn, WhatsApp, Slack, and Discord</strong> — all in your browser, with no signup, no upload, and no server-side processing of your images.</p>
-      <p>Use it to crop a photo to the correct OG aspect ratio, compress JPEG, PNG, or WEBP exports under 200 KB, and copy a complete set of <code>og:</code> and <code>twitter:</code> meta tags ready to paste into your site's <code>&lt;head&gt;</code>.</p>
+      <h2 id="about-h">Open Graph Image Generator by OpenGraph Studio</h2>
+      <p><strong>OpenGraph Studio</strong> is a free, open-source <strong>Open Graph image generator</strong>, <strong>OG image cropper</strong>, and <strong>social card preview tool</strong>. Design, crop, compress, and preview <code>og:image</code> assets at the standard <strong>1200 × 630</strong> resolution and see exactly how your link will look when shared on <strong>Twitter / X, Facebook, LinkedIn, WhatsApp, Slack, and Discord</strong> — all in your browser, with no signup, no upload, and no server-side processing of your images.</p>
+      <p>Use this OpenGraph generator to crop a photo to the correct OG aspect ratio, compress JPEG, PNG, or WEBP exports under 200 KB, and copy a complete set of <code>og:</code> and <code>twitter:</code> meta tags ready to paste into your site's <code>&lt;head&gt;</code>.</p>
 
       <h3>Recommended Open Graph image sizes &amp; specs</h3>
       <table>
@@ -1782,7 +1820,14 @@ button.download:disabled { opacity: 0.5; cursor: not-allowed; }
         <li>100% client-side image processing — your images never leave your browser</li>
       </ul>
 
+      <h3>Open Graph image generator workflow</h3>
+      <p>Start with any URL or upload an image, then turn it into a platform-ready <strong>OG image</strong>. The editor keeps the crop locked to the recommended 1.91:1 Open Graph aspect ratio, previews the result across major social apps, and outputs the exact Open Graph and Twitter Card tags needed for search engines and link unfurlers.</p>
+
       <h3>Frequently asked questions</h3>
+      <details>
+        <summary>How do I use this Open Graph image generator?</summary>
+        <p>Paste a URL to fetch existing Open Graph metadata, or upload an image. Crop it to <strong>1200 × 630</strong>, choose JPEG, PNG, or WEBP, compress it if needed, preview the card across social platforms, and copy the generated <code>og:</code> and <code>twitter:</code> meta tags.</p>
+      </details>
       <details>
         <summary>What is an Open Graph (OG) image?</summary>
         <p>An <strong>OG image</strong> is the preview image that appears when your website link is shared on social media — Twitter / X, Facebook, LinkedIn, WhatsApp, Slack, Discord. It's defined in your page's HTML <code>&lt;head&gt;</code> with a <code>&lt;meta property="og:image" content="…"&gt;</code> tag. The recommended size is <strong>1200×630 pixels</strong> (a 1.91:1 aspect ratio) and the file should ideally be under 200 KB.</p>

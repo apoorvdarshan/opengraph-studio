@@ -65,6 +65,7 @@ opengraph-studio/
 ├── index.html        # the entire app (HTML + CSS + JS)
 ├── api/
 │   └── fetch.js      # Vercel Edge function: server-side CORS proxy
+├── vercel.json       # canonical redirects + crawl-related headers
 ├── LICENSE           # MIT
 ├── README.md
 ├── CONTRIBUTING.md
@@ -72,7 +73,7 @@ opengraph-studio/
     └── FUNDING.yml
 ```
 
-The whole app is in `index.html` — no build, no `node_modules`, no toolchain. The single `api/fetch.js` is a Vercel Edge function that handles the URL-fetch feature server-side.
+The whole app is in `index.html` — no build, no `node_modules`, no toolchain. The single `api/fetch.js` is a Vercel Edge function that handles the URL-fetch feature server-side, and `vercel.json` keeps the custom domain canonical for crawlers.
 
 ## Tech
 
