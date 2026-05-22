@@ -125,6 +125,6 @@ PRs welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for the workflow and style
 - **Developer:** Apoorv Darshan — [@apoorvdarshan on X](https://x.com/apoorvdarshan)
 - **Email:** [ad13dtu@gmail.com](mailto:ad13dtu@gmail.com)
 - **Issues / bugs:** [github.com/apoorvdarshan/opengraph-studio/issues](https://github.com/apoorvdarshan/opengraph-studio/issues)
-- **Support the project:** [paypal.me/apoorvdarshan](https://paypal.me/apoorvdarshan) — or just star the repo, that helps too
+- **Support the project:** [ko-fi.com/apoorvdarshan](https://ko-fi.com/apoorvdarshan) — or just star the repo, that helps too
 
 If this saved you time, a ⭐ on [the repo](https://github.com/apoorvdarshan/opengraph-studio) is the easiest thank-you.
