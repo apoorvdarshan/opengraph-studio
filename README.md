@@ -45,7 +45,7 @@ A single-page workshop for designing, previewing, and exporting Open Graph share
 
 ## Live demo
 
-**[opengraph.website](https://www.opengraph.website/)** — hosted on Vercel.
+**[opengraph.website](https://www.opengraph.website/)** — hosted on Cloudflare Workers.
 
 Or run it locally — no install required:
 
@@ -64,8 +64,8 @@ You can also just open `index.html` directly in any modern browser.
 opengraph-studio/
 ├── index.html        # the entire app (HTML + CSS + JS)
 ├── api/
-│   └── fetch.js      # Vercel Edge function: server-side CORS proxy
-├── vercel.json       # canonical redirects + crawl-related headers
+│   └── index.js      # Cloudflare Worker: server-side CORS proxy + asset routing
+├── wrangler.jsonc    # Cloudflare Workers deployment and domain configuration
 ├── LICENSE           # MIT
 ├── README.md
 ├── CONTRIBUTING.md
@@ -73,14 +73,14 @@ opengraph-studio/
     └── FUNDING.yml
 ```
 
-The whole app is in `index.html` — no build, no `node_modules`, no toolchain. The single `api/fetch.js` is a Vercel Edge function that handles the URL-fetch feature server-side, and `vercel.json` keeps the custom domain canonical for crawlers.
+The whole app is in `index.html` — no frontend build step or framework. The single `worker/index.js` Cloudflare Worker handles the URL-fetch feature, canonical host redirect, and static asset responses.
 
 ## Tech
 
 - **Vanilla HTML, CSS, and JavaScript** — no framework, no bundler, no CDN libraries (except Google Fonts for typography).
 - **Manrope** for UI, **Instrument Serif** for display moments, **JetBrains Mono** for code/dimensions — all from Google Fonts.
 - Image processing via the **Canvas API** (`drawImage` + `toBlob`).
-- **URL-fetch backend**: Vercel Edge function at `/api/fetch?url=...`. Validates the URL, blocks SSRF-prone hosts (localhost, link-local, internal metadata endpoints), 10s timeout, browser-like User-Agent, edge-cached for 5 minutes. Client falls back to public CORS proxies (allorigins, corsproxy.io, codetabs) if the edge function isn't reachable — useful for local development.
+- **URL-fetch backend**: Cloudflare Worker at `/api/fetch?url=...`. Validates the URL, blocks SSRF-prone hosts (localhost, link-local, internal metadata endpoints), 10s timeout, browser-like User-Agent, edge-cached for 5 minutes. Client falls back to public CORS proxies (allorigins, corsproxy.io, codetabs) if the Worker isn't reachable — useful for local development.
 
 ## Recommended values (encoded in the tool)
 
@@ -95,15 +95,15 @@ The whole app is in `index.html` — no build, no `node_modules`, no toolchain. 
 
 Drop `index.html` on any static host:
 
-- **Vercel** — connect the repo (this is what [opengraph.website](https://www.opengraph.website/) uses); Vercel Web Analytics works out of the box via the script in the page.
-- **GitHub Pages** — Settings → Pages → deploy from `main`. The Vercel Analytics script will silently 404; remove it if you don't want the console line.
+- **Cloudflare Workers** — run `npm install`, then `npm run deploy`.
+- **GitHub Pages** — Settings → Pages → deploy from `main` (the `/api/fetch` backend will not be available).
 - **Netlify / Cloudflare Pages** — drag-and-drop the file, or connect the repo.
 
 No server, no API, no env vars required.
 
 ## Privacy
 
-The hosted site at [opengraph.website](https://www.opengraph.website/) uses [Vercel Web Analytics](https://vercel.com/docs/analytics) — privacy-friendly, no cookies, no IP storage, GDPR-compliant. All image processing happens locally in your browser; uploaded images and pasted URLs never leave your device.
+The hosted site at [opengraph.website](https://www.opengraph.website/) runs on Cloudflare Workers. All image processing happens locally in your browser; uploaded images and pasted URLs never leave your device.
 
 ## Roadmap
 
