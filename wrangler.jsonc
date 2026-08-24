@@ -7,7 +7,7 @@
   "preview_urls": false,
   "routes": [
     {
-      "pattern": "opengraph.apoorvdarshan.com",
+      "pattern": "opengraph.aopv.dev",
       "custom_domain": true
     }
   ],
