@@ -7,11 +7,7 @@
   "preview_urls": false,
   "routes": [
     {
-      "pattern": "www.opengraph.website",
-      "custom_domain": true
-    },
-    {
-      "pattern": "opengraph.website",
+      "pattern": "opengraph.aopv.dev",
       "custom_domain": true
     }
   ],
