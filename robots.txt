@@ -4,4 +4,4 @@ Allow: /
 # Don't index the serverless proxy endpoint
 Disallow: /api/
 
-Sitemap: https://www.opengraph.website/sitemap.xml
+Sitemap: https://opengraph.apoorvdarshan.com/sitemap.xml

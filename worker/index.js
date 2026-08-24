@@ -9,7 +9,7 @@ const BLOCKED_HOSTS = new Set([
 
 const BROWSER_HEADERS = {
   "User-Agent":
-    "Mozilla/5.0 (compatible; OpenGraphStudio/1.0; +https://www.opengraph.website)",
+    "Mozilla/5.0 (compatible; OpenGraphStudio/1.0; +https://opengraph.apoorvdarshan.com)",
   Accept:
     "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
   "Accept-Language": "en-US,en;q=0.9",
@@ -18,11 +18,6 @@ const BROWSER_HEADERS = {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-
-    if (url.hostname === "opengraph.website") {
-      url.hostname = "www.opengraph.website";
-      return Response.redirect(url, 308);
-    }
 
     if (url.pathname === "/api/fetch") {
       return proxyFetch(url);

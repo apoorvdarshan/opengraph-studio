@@ -1,13 +1,13 @@
 <p align="center">
-  <a href="https://www.opengraph.website/">
-    <img src="https://www.opengraph.website/favicon.svg" alt="OpenGraph Studio logo" width="96" height="96">
+  <a href="https://opengraph.apoorvdarshan.com/">
+    <img src="https://opengraph.apoorvdarshan.com/favicon.svg" alt="OpenGraph Studio logo" width="96" height="96">
   </a>
 </p>
 
 <h1 align="center">OpenGraph Studio</h1>
 
 <p align="center">
-  <strong>Live → <a href="https://www.opengraph.website/">opengraph.website</a></strong>
+  <strong>Live → <a href="https://opengraph.apoorvdarshan.com/">opengraph.apoorvdarshan.com</a></strong>
 </p>
 
 <p align="center">
@@ -45,7 +45,7 @@ A single-page workshop for designing, previewing, and exporting Open Graph share
 
 ## Live demo
 
-**[opengraph.website](https://www.opengraph.website/)** — hosted on Cloudflare Workers.
+**[opengraph.apoorvdarshan.com](https://opengraph.apoorvdarshan.com/)** — hosted on Cloudflare Workers.
 
 Or run it locally — no install required:
 
@@ -103,7 +103,7 @@ No server, no API, no env vars required.
 
 ## Privacy
 
-The hosted site at [opengraph.website](https://www.opengraph.website/) runs on Cloudflare Workers. All image processing happens locally in your browser; uploaded images and pasted URLs never leave your device.
+The hosted site at [opengraph.apoorvdarshan.com](https://opengraph.apoorvdarshan.com/) runs on Cloudflare Workers. All image processing happens locally in your browser; uploaded images and pasted URLs never leave your device.
 
 ## Roadmap
 
