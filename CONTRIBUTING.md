@@ -5,7 +5,7 @@ Thanks for your interest! This is a small, focused single-file project. Contribu
 ## Quick start
 
 ```bash
-git clone https://github.com/aopv/opengraph-studio
+git clone https://github.com/apoorvdarshan/opengraph-studio
 cd opengraph-studio
 python3 -m http.server 3000
 # open http://localhost:3000
@@ -15,7 +15,7 @@ That's it. There's no build step, no dependencies, no toolchain.
 
 ## Reporting bugs
 
-[Open an issue](https://github.com/aopv/opengraph-studio/issues/new) with:
+[Open an issue](https://github.com/apoorvdarshan/opengraph-studio/issues/new) with:
 
 1. **What you did** — steps to reproduce.
 2. **What you expected** to happen.
