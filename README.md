@@ -13,7 +13,7 @@
 <p align="center">
   <a href="https://github.com/apoorvdarshan/opengraph-studio/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/apoorvdarshan/opengraph-studio?style=flat&color=a78bfa"></a>
   <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-a78bfa.svg?style=flat"></a>
-  <a href="https://x.com/apoorvdarshan"><img alt="Follow on X" src="https://img.shields.io/badge/X-%40aporvv-a78bfa?style=flat&logo=x&logoColor=white"></a>
+  <a href="https://x.com/apoorvdarshan"><img alt="Follow on X" src="https://img.shields.io/badge/X-%40apoorvdarshan-a78bfa?style=flat&logo=x&logoColor=white"></a>
 </p>
 
 
@@ -125,6 +125,6 @@ PRs welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for the workflow and style
 - **Developer:** Apoorv Darshan — [@apoorvdarshan on X](https://x.com/apoorvdarshan)
 - **Email:** [ad13dtu@gmail.com](mailto:ad13dtu@gmail.com)
 - **Issues / bugs:** [github.com/apoorvdarshan/opengraph-studio/issues](https://github.com/apoorvdarshan/opengraph-studio/issues)
-- **Support the project:** [ko-fi.com/apv](https://ko-fi.com/apoorvdarshan) — or just star the repo, that helps too
+- **Support the project:** [ko-fi.com/apoorvdarshan](https://ko-fi.com/apoorvdarshan) — or just star the repo, that helps too
 
 If this saved you time, a ⭐ on [the repo](https://github.com/apoorvdarshan/opengraph-studio) is the easiest thank-you.
